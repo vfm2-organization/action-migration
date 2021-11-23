@@ -9,7 +9,7 @@ body:
       label: Repositories
       description: Please enter the repositories that you would like to migrate from GitLab to GitHub
       render: csv
-      value: |
+      placeholder: |
         group1,repo1
         group2,repo2
     validations:
