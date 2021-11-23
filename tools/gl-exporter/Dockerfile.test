@@ -1,0 +1,21 @@
+FROM ruby:2.5.5-stretch
+LABEL maintainer="services@github.com"
+
+RUN sed -i '/jessie-updates/d' /etc/apt/sources.list && \
+    apt-get update && apt-get install -y --no-install-recommends cmake \
+    build-essential && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/gl-exporter
+
+COPY Gemfile Gemfile.lock gl_exporter.gemspec ./
+COPY lib/gl_exporter/version.rb lib/gl_exporter/
+
+# Install Gemfile.lock'd bundler and deps
+RUN \
+  gem install --no-document bundler && \
+  \
+  cpu_count=$(grep processor /proc/cpuinfo | wc -l) && \
+  bundle config --global silence_root_warning 1 && \
+  bundle install --path vendor/gems --binstubs --jobs=$cpu_count
+
+COPY . .

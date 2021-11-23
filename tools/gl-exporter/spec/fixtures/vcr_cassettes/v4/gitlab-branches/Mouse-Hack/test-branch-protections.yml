@@ -1,0 +1,127 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.com/api/v4/projects/11923805/repository/branches?page=1&per_page=100
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Private-Token:
+      - "<API_TOKEN>"
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 19 Apr 2019 21:03:14 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      - Origin
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"7b6cd8ae54141475799b815e2c0ec902"
+      Link:
+      - <https://gitlab.com/api/v4/projects/11923805/repository/branches?id=11923805&page=1&per_page=100>;
+        rel="first", <https://gitlab.com/api/v4/projects/11923805/repository/branches?id=11923805&page=1&per_page=100>;
+        rel="last"
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Next-Page:
+      - ''
+      X-Page:
+      - '1'
+      X-Per-Page:
+      - '100'
+      X-Prev-Page:
+      - ''
+      X-Request-Id:
+      - q93varsh6M8
+      X-Runtime:
+      - '0.233623'
+      X-Total:
+      - '23'
+      X-Total-Pages:
+      - '1'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Ratelimit-Limit:
+      - '600'
+      Ratelimit-Observed:
+      - '2'
+      Ratelimit-Remaining:
+      - '598'
+      Ratelimit-Reset:
+      - '1555707854'
+      Ratelimit-Resettime:
+      - Sat, 19 Apr 2019 21:04:14 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"name":"dev-1","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-10","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-11","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-12","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-13","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-14","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-15","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-16","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-17","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-18","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-19","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-2","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-20","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-3","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-4","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-5","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-6","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-7","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-8","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev-9","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"dev/test","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false},{"name":"master","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":true,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":true},{"name":"test-normal","commit":{"id":"8ae2093de089bd4176f33a3121e624bc66844213","short_id":"8ae2093d","created_at":"2019-04-18T14:27:42.000+00:00","parent_ids":null,"title":"Initial
+        commit","message":"Initial commit","author_name":"Daniel Perez","author_email":"dpmex4527@gmail.com","authored_date":"2019-04-18T14:27:42.000+00:00","committer_name":"Daniel
+        Perez","committer_email":"dpmex4527@gmail.com","committed_date":"2019-04-18T14:27:42.000+00:00"},"merged":false,"protected":false,"developers_can_push":false,"developers_can_merge":false,"can_push":true,"default":false}]'
+    http_version: 
+  recorded_at: Fri, 19 Apr 2019 21:03:15 GMT
+recorded_with: VCR 3.0.3

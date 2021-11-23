@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.com/api/v4/users?username=lizzhale
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Private-Token:
+      - "<API_TOKEN>"
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sun, 27 Aug 2017 01:25:47 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '213'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"3249c36c75bc4ef750124820b232d83b"
+      Link:
+      - <https://gitlab.com/api/v4/users?active=false&blocked=false&external=false&page=1&per_page=20&skip_ldap=false&username=lizzhale>;
+        rel="first", <https://gitlab.com/api/v4/users?active=false&blocked=false&external=false&page=1&per_page=20&skip_ldap=false&username=lizzhale>;
+        rel="last"
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Next-Page:
+      - ''
+      X-Page:
+      - '1'
+      X-Per-Page:
+      - '20'
+      X-Prev-Page:
+      - ''
+      X-Request-Id:
+      - 53b3294b-d50a-4563-8bde-48c9b5e9b5d0
+      X-Runtime:
+      - '0.072246'
+      X-Total:
+      - '1'
+      X-Total-Pages:
+      - '1'
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: '[{"name":"Lizz","username":"lizzhale","id":529949,"state":"active","avatar_url":"https://secure.gravatar.com/avatar/d36cdb93d0f85b5d7b76a183834d4350?s=80\u0026d=identicon","web_url":"https://gitlab.com/lizzhale"}]'
+    http_version: 
+  recorded_at: Sun, 27 Aug 2017 01:25:46 GMT
+recorded_with: VCR 3.0.3

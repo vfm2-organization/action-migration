@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.com/api/v4/users/4676821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Private-Token:
+      - "<API_TOKEN>"
+      User-Agent:
+      - Faraday v0.15.4
+      If-None-Match:
+      - W/"024b0173883d61d1faf71adf509cccb7"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 304
+      message: Not Modified
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 08 Oct 2019 15:35:08 GMT
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"024b0173883d61d1faf71adf509cccb7"
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - uX9rV4yACx
+      X-Runtime:
+      - '0.030253'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Ratelimit-Limit:
+      - '600'
+      Ratelimit-Observed:
+      - '1'
+      Ratelimit-Remaining:
+      - '599'
+      Ratelimit-Reset:
+      - '1570548968'
+      Ratelimit-Resettime:
+      - Tue, 08 Oct 2019 15:36:08 GMT
+      Gitlab-Lb:
+      - fe-20-lb-gprd
+      Gitlab-Sv:
+      - localhost
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Tue, 08 Oct 2019 15:35:08 GMT
+recorded_with: VCR 3.0.3

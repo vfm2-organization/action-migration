@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.com/api/v4/users/4676821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Private-Token:
+      - "<API_TOKEN>"
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 24 Sep 2019 14:57:41 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '376'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"024b0173883d61d1faf71adf509cccb7"
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - UxR9HIFsNP9
+      X-Runtime:
+      - '0.027393'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Ratelimit-Limit:
+      - '600'
+      Ratelimit-Observed:
+      - '2'
+      Ratelimit-Remaining:
+      - '598'
+      Ratelimit-Reset:
+      - '1569337121'
+      Ratelimit-Resettime:
+      - Tue, 24 Sep 2019 14:58:41 GMT
+      Gitlab-Lb:
+      - fe-19-lb-gprd
+      Gitlab-Sv:
+      - localhost
+    body:
+      encoding: UTF-8
+      string: '{"id":4676821,"name":"78491623","username":"78491623","state":"active","avatar_url":"https://secure.gravatar.com/avatar/44c7e334dbb5051e9e376b96d6490ada?s=80\u0026d=identicon","web_url":"https://gitlab.com/78491623","created_at":"2019-09-24T14:54:33.928Z","bio":null,"location":null,"public_email":"","skype":"","linkedin":"","twitter":"","website_url":"","organization":null}'
+    http_version: 
+  recorded_at: Tue, 24 Sep 2019 14:57:41 GMT
+recorded_with: VCR 3.0.3

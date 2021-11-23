@@ -1,0 +1,123 @@
+name: Shared GitHub Enterprise Cloud Import
+
+on:
+  workflow_call:
+    inputs:
+      migration-guid:
+        default: migration-archive-${{ github.event.issue.number }}
+        type: string
+      user-mappings-path:
+        required: true
+        type: string
+      user-mappings-source-url:
+        required: true
+        type: string
+    secrets:
+      GHEC_ADMIN_TOKEN:
+        required: true
+      GHEC_TARGET_ORGANIZATION:
+        required: true
+
+jobs:
+  import:
+    name: Import
+    runs-on: ubuntu-latest
+
+    env:
+      MIGRATION_GUID: ${{ inputs.migration-guid }}
+
+    defaults:
+      run:
+        working-directory: ./tools/ghec-importer
+
+    steps:
+      - name: Set migration type
+        uses: actions/github-script@v5
+        id: migration-type
+        with:
+          result-encoding: string
+          script: |
+            return context.payload.comment.body.match('dry-run') ? 'Dry-run' : 'Production'
+
+      - name: Check out repository for ghec-importer, user-mappings.csv file and scripts
+        uses: actions/checkout@v2
+
+      - name: Parse issue body
+        id: parse-issue-body
+        uses: actions/github-script@v5
+        with:
+          script: |
+            require('./.github/scripts/parse-issue-body.js')({context, core})
+
+      - name: Download migration archive from artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.MIGRATION_GUID }}.tar.gz
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies for ghec-importer
+        # Avoid husky from running and failing (.git can't be found) by clearing prepare script
+        # npm set-script needs npm > v7, default is v6 with Node.js 14
+        run: |
+          npm install -g npm@8
+          npm set-script prepare ""
+          npm ci --omit=dev
+
+      - name: Link ghec-importer
+        run: npm link
+
+      - name: Run import
+        id: import
+        run: ghec-importer import ../../${{ env.MIGRATION_GUID }}.tar.gz --debug
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GHEC_IMPORTER_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}
+          GHEC_IMPORTER_TARGET_ORGANIZATION: ${{ secrets.GHEC_TARGET_ORGANIZATION }}
+          GHEC_IMPORTER_RESOLVE_REPOSITORY_RENAMES: guid-suffix
+          GHEC_IMPORTER_DISALLOW_TEAM_MERGES: true
+          GHEC_IMPORTER_USER_MAPPINGS_PATH: ${{ inputs.user-mappings-path }}
+          GHEC_IMPORTER_USER_MAPPINGS_SOURCE_URL: ${{ inputs.user-mappings-source-url }}
+          GHEC_IMPORTER_MAKE_INTERNAL: ${{ steps.parse-issue-body.outputs.target-repository-visibility == 'Internal' }}
+          NODE_OPTIONS: --unhandled-rejections=strict # Terminate process with non-zero exit code if file system (fs) operations fail (https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode)
+
+      - if: ${{ failure() }}
+        name: Report failed migration
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const body = `:no_entry: **${{ steps.migration-type.outputs.result }} migration failed.** [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            })
+
+      - if: ${{ success() }}
+        name: Add delete repositories comment
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const migrationType = '${{ steps.migration-type.outputs.result }}'
+
+            if (migrationType === 'Dry-run') {
+              let body = `In order to delete the migrated repositories of the dry-run, add a comment with the following slash command:
+
+              \`\`\`
+              /delete-repositories ${{ steps.import.outputs.migration-guid }}
+              \`\`\`
+              `
+
+              // remove leading whitespace
+              body = body.replace(/  +/g, '')
+
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body
+              })
+            }

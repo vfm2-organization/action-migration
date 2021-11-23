@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.com/api/v4/projects/1169162/merge_requests/2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Private-Token:
+      - "<API_TOKEN>"
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sun, 27 Aug 2017 01:18:35 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1576'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"cff872d9d77da1228f81c76eb44f69d0"
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 5822d00a-6359-4317-9407-080c5ad88978
+      X-Runtime:
+      - '0.467862'
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: '{"id":476834,"iid":2,"project_id":1169162,"title":"WIP: this one''ll
+        really be about what the branch name says","description":"Please report this.
+        To verizon. Or the NSA.","state":"opened","created_at":"2016-05-10T22:20:29.649Z","updated_at":"2016-05-12T20:50:27.073Z","target_branch":"master","source_branch":"omniauth-login","upvotes":0,"downvotes":0,"author":{"name":"Matt","username":"spraints","id":142189,"state":"active","avatar_url":"https://secure.gravatar.com/avatar/0bf208eebdab7c5d16152f70a1ee837f?s=80&d=identicon","web_url":"https://gitlab.com/spraints"},"assignee":{"name":"Matt","username":"spraints","id":142189,"state":"active","avatar_url":"https://secure.gravatar.com/avatar/0bf208eebdab7c5d16152f70a1ee837f?s=80&d=identicon","web_url":"https://gitlab.com/spraints"},"source_project_id":1169162,"target_project_id":1169162,"labels":["Blocker","Don''t
+        Drink and Code"],"work_in_progress":true,"milestone":{"id":62677,"iid":1,"project_id":1169162,"title":"Prototype","description":"Just
+        get the simplest thing working and out there for folks to try out.","state":"active","created_at":"2016-05-10T22:06:45.481Z","updated_at":"2016-05-10T22:06:45.481Z","due_date":"2020-04-20","start_date":null},"merge_when_pipeline_succeeds":false,"merge_status":"can_be_merged","sha":"c222af415ecc78c644c139cbf5eb44a25205cbad","merge_commit_sha":null,"user_notes_count":4,"approvals_before_merge":null,"should_remove_source_branch":null,"force_remove_source_branch":null,"squash":false,"web_url":"https://gitlab.com/Mouse-Hack/hugo-pages/merge_requests/2","subscribed":false}'
+    http_version: 
+  recorded_at: Sun, 27 Aug 2017 01:18:34 GMT
+recorded_with: VCR 3.0.3

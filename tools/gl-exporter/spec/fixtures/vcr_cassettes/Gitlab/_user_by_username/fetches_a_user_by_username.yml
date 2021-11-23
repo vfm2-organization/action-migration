@@ -1,0 +1,84 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.com/api/v4/users?username=78491623
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Private-Token:
+      - "<API_TOKEN>"
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 24 Sep 2019 14:59:14 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '218'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"69b67738c532628c1b5f7c044549a465"
+      Link:
+      - <https://gitlab.com/api/v4/users?active=false&blocked=false&external=false&page=1&per_page=20&skip_ldap=false&username=78491623&with_custom_attributes=false>;
+        rel="first", <https://gitlab.com/api/v4/users?active=false&blocked=false&external=false&page=1&per_page=20&skip_ldap=false&username=78491623&with_custom_attributes=false>;
+        rel="last"
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Next-Page:
+      - ''
+      X-Page:
+      - '1'
+      X-Per-Page:
+      - '20'
+      X-Prev-Page:
+      - ''
+      X-Request-Id:
+      - zl9UuIiOIq3
+      X-Runtime:
+      - '0.032852'
+      X-Total:
+      - '1'
+      X-Total-Pages:
+      - '1'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Ratelimit-Limit:
+      - '600'
+      Ratelimit-Observed:
+      - '1'
+      Ratelimit-Remaining:
+      - '599'
+      Ratelimit-Reset:
+      - '1569337214'
+      Ratelimit-Resettime:
+      - Tue, 24 Sep 2019 15:00:14 GMT
+      Gitlab-Lb:
+      - fe-18-lb-gprd
+      Gitlab-Sv:
+      - localhost
+    body:
+      encoding: UTF-8
+      string: '[{"id":4676821,"name":"78491623","username":"78491623","state":"active","avatar_url":"https://secure.gravatar.com/avatar/44c7e334dbb5051e9e376b96d6490ada?s=80\u0026d=identicon","web_url":"https://gitlab.com/78491623"}]'
+    http_version: 
+  recorded_at: Tue, 24 Sep 2019 14:59:14 GMT
+recorded_with: VCR 3.0.3

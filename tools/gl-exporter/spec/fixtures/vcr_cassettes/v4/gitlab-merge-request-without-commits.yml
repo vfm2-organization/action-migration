@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.com/api/v4/projects/1169162/merge_requests/10
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Private-Token:
+      - "<API_TOKEN>"
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sun, 27 Aug 2017 21:09:28 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '972'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Etag:
+      - W/"8022884669766ee95993c32ec872706a"
+      Vary:
+      - Origin
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - aa3d3655-252b-48e9-a11b-783437418bed
+      X-Runtime:
+      - '0.272206'
+      Strict-Transport-Security:
+      - max-age=31536000
+    body:
+      encoding: UTF-8
+      string: '{"id":4385181,"iid":10,"project_id":1169162,"title":"No commits in
+        this MR","description":"","state":"opened","created_at":"2017-07-24T19:37:37.033Z","updated_at":"2017-07-26T17:34:57.585Z","target_branch":"master","source_branch":"no-commits","upvotes":0,"downvotes":0,"author":{"name":"Maxwell
+        Pray","username":"synthead","id":1477621,"state":"active","avatar_url":"https://gitlab.com/uploads/-/system/user/avatar/1477621/avatar.png","web_url":"https://gitlab.com/synthead"},"assignee":null,"source_project_id":1169162,"target_project_id":1169162,"labels":[],"work_in_progress":false,"milestone":null,"merge_when_pipeline_succeeds":false,"merge_status":"cannot_be_merged","sha":"fc40f8230aab1a10e16c70b2706e2d2a6164eea0","merge_commit_sha":null,"user_notes_count":2,"approvals_before_merge":null,"should_remove_source_branch":null,"force_remove_source_branch":false,"squash":false,"web_url":"https://gitlab.com/Mouse-Hack/hugo-pages/merge_requests/10","subscribed":true}'
+    http_version: 
+  recorded_at: Sun, 27 Aug 2017 21:09:28 GMT
+recorded_with: VCR 3.0.3
