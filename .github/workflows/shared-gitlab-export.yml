@@ -96,6 +96,7 @@ jobs:
           name: ${{ env.MIGRATION_GUID }}.tar.gz
           path: ${{ github.workspace }}/${{ env.MIGRATION_GUID }}.tar.gz
           if-no-files-found: error
+          retention-days: 1
 
       - if: ${{ failure() }}
         name: Report failed export
