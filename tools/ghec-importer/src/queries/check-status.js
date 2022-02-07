@@ -12,6 +12,7 @@ module.exports = async migration => {
     organization (login: $organization) {
       migration (guid: $guid) {
         state
+        databaseId
       }
     }
   }`

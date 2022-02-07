@@ -1,6 +1,6 @@
 {
   "name": "ghec-importer",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "A command-line utility for importing repositories into GitHub Enterprise Cloud",
   "private": true,
   "bin": "./cli.js",

@@ -68,7 +68,7 @@ function createTemporaryDirectory(stagingPath) {
 }
 
 function deleteTemporaryDirectory(temporaryDirectory) {
-  fs.rmdirSync(temporaryDirectory, { recursive: true })
+  fs.rmSync(temporaryDirectory, { recursive: true, force: true })
 }
 
 function deletePreparedArchive(preparedArchivePath) {

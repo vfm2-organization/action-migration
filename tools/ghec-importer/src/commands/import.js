@@ -6,6 +6,7 @@ const uploadMigrationArchive = require('../queries/upload-migration-archive')
 const prepareImport = require('../queries/prepare-import')
 const performImport = require('../queries/perform-import')
 const unlockImportedRepositories = require('../queries/unlock-imported-repositories')
+const applyMappings = require('../utils/apply-mappings')
 const applyUserMappings = require('../utils/apply-user-mappings')
 const loadAndResolveConflicts = require('../utils/load-and-resolve-conflicts')
 const reportConflicts = require('../utils/report-conflicts')
@@ -45,6 +46,7 @@ module.exports = () => {
     .option('--disallow-team-merges', 'disallow automatically merging teams, new teams will be created instead', process.env.GHEC_IMPORTER_DISALLOW_TEAM_MERGES === 'true')
     .option('-I, --make-internal', 'change the visibility of migrated repositories to internal after the migration', process.env.GHEC_IMPORTER_MAKE_INTERNAL === 'true')
     .option('-D, --delete-repositories', 'prompt to delete migrated repositories after the migration completes (useful for dry-runs and debugging)', process.env.GHEC_IMPORTER_DELETE === 'true')
+    .option('-m, --mappings-path <string>', 'path to a csv file that contains mappings to be applied before the import (modelName,sourceUrl,targetUrl,action)', process.env.GHEC_IMPORTER_MAPPINGS_PATH)
     .option(
       '-u, --user-mappings-path <string>',
       'path to a csv file that contains user mappings to be applied before the import (source,target\\nuser-source,user-target)',
@@ -111,6 +113,12 @@ async function run(archivePath, options) {
     process.exit(3)
   }
 
+  // apply mappings with the csv
+  if (options.mappingsPath) {
+    state = await applyMappings(migration)
+  }
+
+  // leave for existing ppl
   if (options.userMappingsPath) {
     state = await applyUserMappings(migration)
   }
