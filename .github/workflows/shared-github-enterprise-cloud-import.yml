@@ -54,7 +54,7 @@ jobs:
         with:
           name: ${{ env.MIGRATION_GUID }}.tar.gz
 
-      - name: create subset of user mappings
+      - name: Create subset of user mappings with only users included in the migration archive
         run: | 
           users=$(tar -zxf ../../${{ env.MIGRATION_GUID }}.tar.gz --wildcards './users_*.json' --to-stdout | jq -r '.[].login' | sort | uniq)
           echo "source,target" > ../../subset-user-mappings.csv
