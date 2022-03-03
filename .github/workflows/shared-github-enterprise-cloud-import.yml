@@ -60,7 +60,7 @@ jobs:
           echo "source,target" > ../../subset-user-mappings.csv
           for i in $users; do echo $i; grep $i"," ${{ inputs.user-mappings-path }} >> ../../subset-user-mappings.csv || echo "$i not found in user-mappings.csv"; done
 
-      - name: cat user mappings
+      - name: Output subset-user-mappings.csv content in log (for debugging)
         run: cat ../../subset-user-mappings.csv
 
       - uses: actions/setup-node@v2
