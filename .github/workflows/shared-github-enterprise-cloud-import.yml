@@ -54,6 +54,15 @@ jobs:
         with:
           name: ${{ env.MIGRATION_GUID }}.tar.gz
 
+      - name: Create subset of user mappings with only users included in the migration archive
+        run: | 
+          users=$(tar -zxf ../../${{ env.MIGRATION_GUID }}.tar.gz --wildcards './users_*.json' --to-stdout | jq -r '.[].login' | sort | uniq)
+          echo "source,target" > ../../subset-user-mappings.csv
+          for i in $users; do echo $i; grep $i"," ${{ inputs.user-mappings-path }} >> ../../subset-user-mappings.csv || echo "$i not found in user-mappings.csv"; done
+
+      - name: Output subset-user-mappings.csv content in log (for debugging)
+        run: cat ../../subset-user-mappings.csv
+
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
@@ -78,7 +87,7 @@ jobs:
           GHEC_IMPORTER_TARGET_ORGANIZATION: ${{ secrets.GHEC_TARGET_ORGANIZATION }}
           GHEC_IMPORTER_RESOLVE_REPOSITORY_RENAMES: guid-suffix
           GHEC_IMPORTER_DISALLOW_TEAM_MERGES: true
-          GHEC_IMPORTER_USER_MAPPINGS_PATH: ${{ inputs.user-mappings-path }}
+          GHEC_IMPORTER_USER_MAPPINGS_PATH: ../../subset-user-mappings.csv
           GHEC_IMPORTER_USER_MAPPINGS_SOURCE_URL: ${{ inputs.user-mappings-source-url }}
           GHEC_IMPORTER_MAKE_INTERNAL: ${{ steps.parse-issue-body.outputs.target-repository-visibility == 'Internal' }}
           NODE_OPTIONS: --unhandled-rejections=strict # Terminate process with non-zero exit code if file system (fs) operations fail (https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode)
