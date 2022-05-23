@@ -14,7 +14,7 @@ To do this, create a pull request to this repository with changes to `user-mappi
 ## Step 2: Create an issue from template
 
 Create an issue from template to specify source repositories.
-Go to issues -> [New issue](https://github.com/steffen-inc-migration-org/valet-migrations/issues/new/choose) -> Get Started
+Go to issues -> [New issue](https://github.com/github/migrations-via-actions-v3-from-gitlab-ghes-to-ghec/issues/new/choose) -> Get Started
 
 Specify repositories to migrate in issue's body.
 > **Tip**: You can specify multiple repositories in one issue.
