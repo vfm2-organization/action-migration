@@ -7,7 +7,7 @@ on:
 jobs:
   export:
     if: contains(github.event.issue.labels.*.name, 'github-enterprise-server')
-    uses: github/migrations-via-actions-v3-from-gitlab-ghes-to-ghec/.github/workflows/shared-github-enterprise-server-export.yml@main
+    uses: ./.github/workflows/shared-github-enterprise-server-export.yml
     with:
       runner: ghes-migration
       ghes-ssh-host: github.steffenhiller.com
@@ -17,7 +17,7 @@ jobs:
 
   import:
     needs: export
-    uses: github/migrations-via-actions-v3-from-gitlab-ghes-to-ghec/.github/workflows/shared-github-enterprise-cloud-import.yml@main
+    uses: ./.github/workflows/shared-github-enterprise-cloud-import.yml
     with:
       user-mappings-path: ../../user-mappings.csv
       user-mappings-source-url: https://github.example.com

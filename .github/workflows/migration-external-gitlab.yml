@@ -7,7 +7,7 @@ on:
 jobs:
   export:
     if: contains(github.event.issue.labels.*.name, 'external-gitlab')
-    uses: github/migrations-via-actions-v3-from-gitlab-ghes-to-ghec/.github/workflows/shared-gitlab-export.yml@main
+    uses: ./.github/workflows/shared-gitlab-export.yml
     secrets:
       GITLAB_USERNAME: ${{ secrets.EXTERNAL_GITLAB_USERNAME }}
       GITLAB_API_PRIVATE_TOKEN: ${{ secrets.EXTERNAL_GITLAB_API_PRIVATE_TOKEN }}
@@ -15,7 +15,7 @@ jobs:
 
   import:
     needs: export
-    uses: github/migrations-via-actions-v3-from-gitlab-ghes-to-ghec/.github/workflows/shared-github-enterprise-cloud-import.yml@main
+    uses: ./.github/workflows/shared-github-enterprise-cloud-import.yml
     with:
       user-mappings-path: ../../user-mappings.csv
       user-mappings-source-url: https://gitlab.example.com
