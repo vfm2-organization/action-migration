@@ -1,0 +1,27 @@
+name: Migration from Bitbucket
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  export:
+    if: contains(github.event.issue.labels.*.name, 'migration')
+    uses: ./.github/workflows/shared-bitbucket-export.yml@main
+    with:
+      runner: bitbucket-runner
+      setup-ruby: false
+    secrets:
+      BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+      BITBUCKET_API_PRIVATE_TOKEN: ${{ secrets.BITBUCKET_API_PRIVATE_TOKEN }}
+      BITBUCKET_API_ENDPOINT: ${{ secrets.BITBUCKET_API_ENDPOINT }}
+
+  import:
+    needs: export
+    uses: ./.github/workflows/shared-github-enterprise-cloud-import.yml@main
+    with:
+      user-mappings-path: ../../user-mappings.csv
+      user-mappings-source-url: https://bitbucket.example.com
+    secrets:
+      GHEC_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}
+      GHEC_TARGET_ORGANIZATION: ${{ secrets.GHEC_TARGET_ORGANIZATION }}

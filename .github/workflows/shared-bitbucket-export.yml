@@ -1,0 +1,101 @@
+name: Shared Bitbucket Export
+
+on:
+  workflow_call:
+    inputs:
+      migration-guid:
+        default: migration-archive-${{ github.event.issue.number }}
+        type: string
+      runner:
+        default: ubuntu-latest
+        type: string
+      setup-ruby:
+        default: true
+        type: boolean
+    secrets:
+      BITBUCKET_USERNAME:
+        required: true
+      BITBUCKET_API_PRIVATE_TOKEN:
+        required: true
+      BITBUCKET_API_ENDPOINT:
+        required: true
+
+jobs:
+  export:
+    name: Export
+    runs-on: ${{ inputs.runner }}
+
+    if: github.event_name == 'issue_comment' &&
+      startsWith(github.event.comment.body, '/run-migration')
+
+    env:
+      MIGRATION_GUID: ${{ inputs.migration-guid }}
+      BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+      BITBUCKET_API_PRIVATE_TOKEN: ${{ secrets.BITBUCKET_API_PRIVATE_TOKEN }}
+      BITBUCKET_API_ENDPOINT: ${{ secrets.BITBUCKET_API_ENDPOINT }}
+
+    steps:
+
+      - name: Check out repository for gl-exporter
+        uses: actions/checkout@v2
+
+      - name: Update issue with running state
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const body = `:hourglass_flowing_sand: Running migration. [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            })
+
+      - name: Parse repositories from issue body and write to file
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const fs = require('fs')
+            const parsedIssueBody = require('./.github/scripts/parse-issue-body.js')({context, core})
+            
+            fs.writeFileSync('repositories.txt', parsedIssueBody.repositories.trim())
+
+      - run: cat repositories.txt
+
+      - if: ${{ inputs.setup-ruby }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.4.1
+
+      - name: Run bootstrap script
+        working-directory: ./tools/bbs-exporter
+        run: chmod +x ./script/bootstrap && ./script/bootstrap
+
+      - name: Output gl-exporter version
+        run: bbs-exporter --version
+
+      - name: Run export from Bitbucket Server
+        run: bbs-exporter -f repositories.txt -o ${MIGRATION_GUID}.tar.gz
+
+      - name: Upload migration archive to artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.MIGRATION_GUID }}.tar.gz
+          path: ${{ github.workspace }}/${{ env.MIGRATION_GUID }}.tar.gz
+          if-no-files-found: error
+          retention-days: 1
+
+      - if: ${{ failure() }}
+        name: Report failed export
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const body = `:no_entry: **Export failed.** [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            })
