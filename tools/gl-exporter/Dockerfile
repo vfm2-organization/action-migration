@@ -34,7 +34,7 @@ COPY ./ /gl-exporter/
 WORKDIR /gl-exporter
 
 # Install Gemfile.lock'd bundler
-RUN gem install --no-document bundler
+RUN gem install --no-document bundler -v 2.3.26
 
 # Run bootstrap
 RUN chmod +x /gl-exporter/script/bootstrap

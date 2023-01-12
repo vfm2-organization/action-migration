@@ -9,7 +9,7 @@ GitLab Exporter was designed to export project information and meta data from in
 | Users | **Y** | |
 | Groups | **Y** | Imported as "Organizations" |
 | Group Members | **Y** | Imported as "Teams" |
-| Subgroups & Subgroup Projects | **N** | Support for subgroups and their projects has not yet been implemented. See limitations section below. |
+| Subgroups & Subgroup Projects | **Y** | Each group and subgroup is exported as an organization which is then mapped to a single target organization on import. |
 | Projects | **Y** | Imported as "Repositories" |
 | Fork Relationships | **N** | Migrating fork relationships is not supported by `ghe-migrator` and is not currently on the roadmap for GitLab Exporter. **NOTE:** Fork repos can be migrated but all fork relationships will not carry over. See limitations section below. |
 | Protected branches | **Y** | Protected branch settings and associated data are migrated |
@@ -20,7 +20,7 @@ GitLab Exporter was designed to export project information and meta data from in
 | Issue Notes | **Y** | Imported as "Issue Comments" |
 | Events | **Y** | Events are imported as Issue Comments, since GitLab's API does not provide enough information to build robust Events in GitHub |
 | Webhooks | **Y** | Requires GitHub Enterprise 2.7 |
-| Attachments | **Y** | GitLab [announced](https://about.gitlab.com/2018/11/28/security-release-gitlab-11-dot-5-dot-1-released/) changes to their API that now enforce personal access tokens to work only with API, RSS, and registry resources. This change has broken how we download non-image attachments as we can no longer retrieve them via personal access token. This affects all GitLab versions from `11.5.1`, `11.4.8`, and `11.3.11` and onward, including GitLab.com. `gl-exporter` will skip exporting any unreachable non-image attachments and will report the direct URL of the attachment and the model it was attached to (issue, merge request, issue note, etc) in the log. These attachments can be downloaded via the browser and re-uploaded to GitHub after the migration. |
+| Attachments | **Y** | GitLab announced changes to their API that now enforce personal access tokens to work only with API, RSS, and registry resources. This change has broken how we download non-image attachments as we can no longer retrieve them via personal access token. This affects all GitLab versions from `11.5.1`, `11.4.8`, and `11.3.11` and onward, including GitLab.com. `gl-exporter` will skip exporting any unreachable non-image attachments and will report the direct URL of the attachment and the model it was attached to (issue, merge request, issue note, etc) in the log. These attachments can be downloaded via the browser and re-uploaded to GitHub after the migration. </br></br> **NOTE (August, 11th 2022)**: Image attachments can no longer be migrated. The functionality of fetching images via personal access tokens has also been recently deprecated. GitLab doesn't seem to mention of this change in their deprecation or removal change logs, and nothing in the release notes for their releases.  |
 | Tags | **Y** | Imported as "Releases" |
 | Avatars | **N** | Avatars are not supported by `ghe-migrator` and are not currently on the roadmap for the GitLab Exporter |
 | Commit Comments | **Y** | |
@@ -51,9 +51,6 @@ cd ~/my-forked-repo
 git remote set-url origin https://github.example.com/dpmex4527/my-forked-repo.git
 git push --mirror origin
 ```
-
-#### Subgroups and Subgroup projects
-GitLab currently does not expose Subgroup and Subgroups via their API. Due to this limitation, support for Subgroups and Subgroup projects is not possible.
 
 #### Events
 

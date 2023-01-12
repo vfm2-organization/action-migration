@@ -51,6 +51,8 @@ module.exports = async (migration, title) => {
     core.setOutput('migration-guid', migration.guid)
     core.setOutput('migration-id', migration.id)
     core.setOutput('migration-organization-id', migration.organizationId)
+    core.setOutput('migration-repositories', repositories.map(repo => repo.targetUrl).join(','))
+    core.setOutput('migration-repository-records', JSON.stringify(repositories))
   } else {
     logger.debugEnd()
     console.log()

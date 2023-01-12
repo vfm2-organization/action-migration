@@ -173,19 +173,17 @@ describe GlExporter, :v4 do
   end
 
   describe "#check_version!" do
-    # Minimum version is 8.9.0
+    # Minimum version is 8.13.0
     subject do
       exporter.check_version!
     end
 
     [
-      "8.9.0",
-      "8.9.0-ee",
-      "8.9.0-ce",
-      "8.9.5",
       "8.13.0",
-      "8.13.0-pre",
+      "8.13.0-ee",
+      "8.13.0-ce",
       "9.10",
+      "10.10",
     ].each do |version|
       it "returns true for version #{version}" do
         allow(Gitlab).to receive(:version).and_return({"version" => version})
@@ -194,6 +192,10 @@ describe GlExporter, :v4 do
     end
 
     [
+      "8.9.0",
+      "8.9.0-ee",
+      "8.9.0-ce",
+      "8.9.5",
       "7.8.0",
       "7.8.0-ee",
       "7.8.0-ce",
@@ -201,6 +203,7 @@ describe GlExporter, :v4 do
       "8.9.0-rc2",
       "8.9.0-pre",
       "5.2.0.pre",
+      "8.13.0-pre",
     ].each do |version|
       it "raises an error for bad version #{version}" do
         expect(Gitlab).to receive(:version).and_return({"version" => version})

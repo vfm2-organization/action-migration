@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe GlExporter::MemberSerializer, :v4 do
   let(:member) do
-    VCR.use_cassette("v4/gitlab-members") do
-      Gitlab.group_members("hackmouse").first
+    VCR.use_cassette("v4/gitlab-members/all") do
+      Gitlab.group_members("Mouse-Hack").first
     end
   end
   subject { described_class.new }
@@ -14,7 +14,7 @@ describe GlExporter::MemberSerializer, :v4 do
     it "returns a serialized User hash" do
       expected = {
         :user => "https://gitlab.com/spraints",
-        :role => "direct_member",
+        :role => "admin",
         :state => "active"
       }
 

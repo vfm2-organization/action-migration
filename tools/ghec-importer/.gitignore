@@ -4,3 +4,4 @@ node_modules
 tmp
 archives
 user-mappings.csv
+coverage

@@ -30,7 +30,7 @@ describe GlExporter::CommitCommentSerializer, :v4 do
     it "returns a serialized Issue hash" do
       expected = {
         :type       => "commit_comment",
-        :url        => "https://gitlab.com/Mouse-Hack/hugo-pages/commit/220d5dc2582a49d694c503abdb8cf25bcdd81dce#note_5f8b680d0c88397bbdafddb8598e9203",
+        :url        => "https://gitlab.com/Mouse-Hack/hugo-pages/commit/220d5dc2582a49d694c503abdb8cf25bcdd81dce#note_fede13597b664e7097da0720dfc3b76e",
         :repository => "https://gitlab.com/Mouse-Hack/hugo-pages",
         :user       => "https://gitlab.com/lizzhale",
         :body       => "is this necessary?\r\n\r\n[testFile.txt](/uploads/af7fcacfc5d69fdcf63a8f04048a106f/testFile.txt)\r\n\r\n\r\n\r\n",

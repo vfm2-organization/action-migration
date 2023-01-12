@@ -21,33 +21,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Apr 2021 18:11:38 GMT
+      - Fri, 06 May 2022 16:43:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - __cfduid=d270d0fe6546e1a7cf718c402d119ef251617819097; expires=Fri, 07-May-21
-        18:11:37 GMT; path=/; domain=.gitlab.com; HttpOnly; SameSite=Lax; Secure
-      Vary:
-      - Accept-Encoding
-      - Origin
       Cache-Control:
       - max-age=0, private, must-revalidate
       Etag:
-      - W/"02012eaf626348ef784ef5abae69f64c"
+      - W/"01b1c475a10c3d139eb8d17794890728"
       Link:
       - <https://gitlab.com/api/v4/projects/25693144/labels?id=25693144&include_ancestor_groups=true&page=1&per_page=100&with_counts=false>;
         rel="first", <https://gitlab.com/api/v4/projects/25693144/labels?id=25693144&include_ancestor_groups=true&page=1&per_page=100&with_counts=false>;
         rel="last"
+      Vary:
+      - Origin
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
       - SAMEORIGIN
-      X-Gitlab-Feature-Category:
-      - issue_tracking
       X-Next-Page:
       - ''
       X-Page:
@@ -57,9 +51,9 @@ http_interactions:
       X-Prev-Page:
       - ''
       X-Request-Id:
-      - 01F2PRGPR8CX41T2SC5R3KVR7F
+      - 01G2D43CTM7HYJ3SQNB501ERBQ
       X-Runtime:
-      - '0.139103'
+      - '0.250606'
       X-Total:
       - '36'
       X-Total-Pages:
@@ -69,45 +63,47 @@ http_interactions:
       Referrer-Policy:
       - strict-origin-when-cross-origin
       Ratelimit-Observed:
-      - '2'
+      - '1'
       Ratelimit-Remaining:
-      - '1998'
+      - '1999'
       Ratelimit-Reset:
-      - '1617819158'
+      - '1651855498'
       Ratelimit-Resettime:
-      - Wed, 07 Apr 2021 18:12:38 GMT
+      - Fri, 06 May 2022 16:44:58 GMT
       Ratelimit-Limit:
       - '2000'
       Gitlab-Lb:
-      - fe-04-lb-gprd
+      - fe-08-lb-gprd
       Gitlab-Sv:
       - localhost
       Cf-Cache-Status:
       - DYNAMIC
-      Cf-Request-Id:
-      - '094f2172be0000fda553bf5000000001'
       Expect-Ct:
       - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=z4Cn71pN6DEsxHYa6vJyepHlQIb7Zqdbt%2B4yVgcyajoJ4ftUADsXA3CArDU6BnpsNbuyKmr7t4FU5H3Ro7dZev8n%2B%2B1HGCU%2B1bQQeHupWlEOUrJrlPHlgexEL2k%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
       Server:
       - cloudflare
       Cf-Ray:
-      - 63c538312b50fda5-PDX
+      - 70732d8b3b6ddde7-SEA
     body:
       encoding: ASCII-8BIT
-      string: '[{"id":19440082,"name":"Catalog","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440083,"name":"Catalog
-        (Use DevOps)","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440084,"name":"Config
-        Calculator (Use DevOps)","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440085,"name":"Demo
-        Servers","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440086,"name":"Documentation","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440087,"name":"Exacq.com","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440089,"name":"Exacq.com
-        (Use DevOps)","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440090,"name":"IP
-        Camera Database","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440091,"name":"Integration
-        - Access Control","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440092,"name":"Integration
-        - Other","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440093,"name":"Integration
-        - POS","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440094,"name":"Knowledge
-        Base","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440095,"name":"License
-        Key Generator (Use DevOps)","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440096,"name":"N/A","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440097,"name":"POS","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440098,"name":"S-series","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440099,"name":"Sugar","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440100,"name":"Support","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440101,"name":"System
-        Testing","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440102,"name":"Translation
-        Server","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440103,"name":"V-series
-        (Deprecated)","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440104,"name":"VCA","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440105,"name":"Virtual","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440106,"name":"blocker","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440107,"name":"critical","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440110,"name":"defect","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440111,"name":"duplicate","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440112,"name":"enhancement","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440114,"name":"fixed","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440115,"name":"invalid","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440116,"name":"major","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440120,"name":"minor","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440121,"name":"task","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440122,"name":"trivial","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440126,"name":"wontfix","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true},{"id":19440127,"name":"worksforme","color":"#6699cc","description":null,"description_html":"","text_color":"#FFFFFF","subscribed":false,"priority":null,"is_project_label":true}]'
-    http_version:
-  recorded_at: Wed, 07 Apr 2021 18:11:38 GMT
+      string: '[{"id":19440082,"name":"Catalog","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440083,"name":"Catalog
+        (Use DevOps)","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440084,"name":"Config
+        Calculator (Use DevOps)","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440085,"name":"Demo
+        Servers","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440086,"name":"Documentation","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440087,"name":"Exacq.com","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440089,"name":"Exacq.com
+        (Use DevOps)","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440090,"name":"IP
+        Camera Database","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440091,"name":"Integration
+        - Access Control","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440092,"name":"Integration
+        - Other","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440093,"name":"Integration
+        - POS","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440094,"name":"Knowledge
+        Base","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440095,"name":"License
+        Key Generator (Use DevOps)","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440096,"name":"N/A","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440097,"name":"POS","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440098,"name":"S-series","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440099,"name":"Sugar","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440100,"name":"Support","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440101,"name":"System
+        Testing","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440102,"name":"Translation
+        Server","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440103,"name":"V-series
+        (Deprecated)","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440104,"name":"VCA","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440105,"name":"Virtual","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440106,"name":"blocker","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440107,"name":"critical","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440110,"name":"defect","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440111,"name":"duplicate","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440112,"name":"enhancement","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440114,"name":"fixed","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440115,"name":"invalid","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440116,"name":"major","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440120,"name":"minor","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440121,"name":"task","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440122,"name":"trivial","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440126,"name":"wontfix","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true},{"id":19440127,"name":"worksforme","description":null,"description_html":"","text_color":"#FFFFFF","color":"#6699cc","subscribed":false,"priority":null,"is_project_label":true}]'
+    http_version: 
+  recorded_at: Fri, 06 May 2022 16:43:59 GMT
 recorded_with: VCR 3.0.3
