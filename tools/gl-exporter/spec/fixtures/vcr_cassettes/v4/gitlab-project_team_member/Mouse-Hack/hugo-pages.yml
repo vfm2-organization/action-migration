@@ -10,38 +10,36 @@ http_interactions:
       Private-Token:
       - "<API_TOKEN>"
       User-Agent:
-      - Faraday v0.13.1
+      - Faraday v0.17.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
-      Connection:
-      - keep-alive
-      Keep-Alive:
-      - 30
   response:
     status:
       code: 200
       message: OK
     headers:
-      Server:
-      - nginx
       Date:
-      - Sun, 27 Aug 2017 01:23:36 GMT
+      - Fri, 06 May 2022 16:24:20 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '249'
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
       Cache-Control:
       - max-age=0, private, must-revalidate
       Etag:
-      - W/"ab3aece55207d3c64a2740638862909d"
+      - W/"d18d0f7a50469559317d137937c9013e"
       Link:
       - <https://gitlab.com/api/v4/projects/1169162/members?id=1169162&page=1&per_page=20>;
         rel="first", <https://gitlab.com/api/v4/projects/1169162/members?id=1169162&page=1&per_page=20>;
         rel="last"
       Vary:
       - Origin
+      X-Content-Type-Options:
+      - nosniff
       X-Frame-Options:
       - SAMEORIGIN
       X-Next-Page:
@@ -53,18 +51,46 @@ http_interactions:
       X-Prev-Page:
       - ''
       X-Request-Id:
-      - f1884979-1a0c-4264-8211-5fc7b6925495
+      - 01G2D2ZE7PJA9XJEAWKR8QDGGZ
       X-Runtime:
-      - '0.107001'
+      - '0.048580'
       X-Total:
       - '1'
       X-Total-Pages:
       - '1'
       Strict-Transport-Security:
       - max-age=31536000
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Ratelimit-Observed:
+      - '1'
+      Ratelimit-Remaining:
+      - '1999'
+      Ratelimit-Reset:
+      - '1651854320'
+      Ratelimit-Resettime:
+      - Fri, 06 May 2022 16:25:20 GMT
+      Ratelimit-Limit:
+      - '2000'
+      Gitlab-Lb:
+      - fe-02-lb-gprd
+      Gitlab-Sv:
+      - localhost
+      Cf-Cache-Status:
+      - DYNAMIC
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=apeOY34wpBKqWJHUo6JdtlU%2F%2BmYBVrGfJeeG5Hnss0E68BQF6Z0BCEhgoWvn1YN8G5QNyo%2F9HfPzYa2bkrahzB3VkOf9uaXUMp5YfFAmzu%2FhQEsE70glazcDitg%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 707310c77d1039ea-SEA
     body:
-      encoding: UTF-8
-      string: '[{"name":"Matt","username":"spraints","id":142189,"state":"active","avatar_url":"https://secure.gravatar.com/avatar/0bf208eebdab7c5d16152f70a1ee837f?s=80\u0026d=identicon","web_url":"https://gitlab.com/spraints","access_level":40,"expires_at":null}]'
+      encoding: ASCII-8BIT
+      string: '[{"id":142189,"username":"spraints","name":"Matt","state":"active","avatar_url":"https://secure.gravatar.com/avatar/0bf208eebdab7c5d16152f70a1ee837f?s=80\u0026d=identicon","web_url":"https://gitlab.com/spraints","access_level":40,"created_at":"2016-05-10T21:15:17.473Z","created_by":{"id":142189,"username":"spraints","name":"Matt","state":"active","avatar_url":"https://secure.gravatar.com/avatar/0bf208eebdab7c5d16152f70a1ee837f?s=80\u0026d=identicon","web_url":"https://gitlab.com/spraints"},"expires_at":null,"membership_state":"active"}]'
     http_version: 
-  recorded_at: Sun, 27 Aug 2017 01:23:35 GMT
+  recorded_at: Fri, 06 May 2022 16:24:20 GMT
 recorded_with: VCR 3.0.3

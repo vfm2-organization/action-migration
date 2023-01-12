@@ -22,7 +22,6 @@ class GlExporter
         "organization" => group,
         "name" => name,
         "description" => nil,
-        "privacy": "closed",
         "permissions" => repositories,
         "members" => members,
         "created_at" => Time.now.to_s

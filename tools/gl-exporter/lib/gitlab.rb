@@ -326,7 +326,7 @@ class Gitlab
     # @return [Array<Hash>]
     def group_members(group_name)
       group_name = URI.encode_www_form_component(group_name)
-      get("groups/#{group_name}/members", auto_paginate: :standard)
+      get("groups/#{group_name}/members/all", auto_paginate: :standard).select{ |member| member["membership_state"] == "active" || member["state"] == "active" }
     end
 
     # Get the tags for a given project. Results are not paginated

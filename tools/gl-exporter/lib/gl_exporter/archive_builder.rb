@@ -32,11 +32,13 @@ class GlExporter
 
     # Clone a project's wiki to the staging dir
     def clone_wiki(project)
-      archive_repo(
+      wiki = archive_repo(
         clone_url: wiki_clone_url(project),
         to: wiki_path(project),
         credentials: git_credentials
       )
+
+      change_wiki_head_ref(wiki)
     end
 
     # Put all of the data into a tar file and dispose of temporary files.

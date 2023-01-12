@@ -100,7 +100,7 @@ describe GlExporter::ModelUrlService, :v4 do
     it "returns a gitlab url for an commit comment" do
       commit_comment["repository"] = project
       commit_comment["commit"] = commit
-      expect(subject.url_for_model(commit_comment, type: "commit_comment")).to eq("https://gitlab.com/Mouse-Hack/hugo-pages/commit/220d5dc2582a49d694c503abdb8cf25bcdd81dce#note_5f8b680d0c88397bbdafddb8598e9203")
+      expect(subject.url_for_model(commit_comment, type: "commit_comment")).to eq("https://gitlab.com/Mouse-Hack/hugo-pages/commit/220d5dc2582a49d694c503abdb8cf25bcdd81dce#note_fede13597b664e7097da0720dfc3b76e")
     end
 
     it "does not rewrite other namespaces" do

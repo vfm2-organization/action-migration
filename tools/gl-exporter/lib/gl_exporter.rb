@@ -65,7 +65,7 @@ class GlExporter
   attr_accessor :options
 
   OPTIONAL_MODELS = %w{issues merge_requests commit_comments hooks wiki}
-  MINIMUM_VERSION = "8.9.0"
+  MINIMUM_VERSION = "8.13.0"
 
   def initialize(options={})
     @options = options

@@ -21,6 +21,13 @@ class GlExporter
       )
       setup_tracking_branches(repository)
       fetch_all_refs(repository, credentials: credentials)
+      repository
+    end
+
+    def change_wiki_head_ref(wiki)
+      return unless contains_branch?(wiki, "main") && !contains_branch?(wiki, "master")
+
+      wiki.branches.rename("main", "master")
     end
 
     def clone_certificate_check
@@ -30,6 +37,10 @@ class GlExporter
     end
 
     private
+
+    def contains_branch?(repo, branch)
+      repo.branches.any? { |b| b.name == branch }
+    end
 
     # Creates local tracking branches for a repository
     # @param [Rugged::Repository] repository

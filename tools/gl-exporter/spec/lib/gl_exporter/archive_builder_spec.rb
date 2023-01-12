@@ -47,13 +47,39 @@ describe GlExporter::ArchiveBuilder, :v4 do
       end
     end
 
+    let(:wiki_fixture_path) { "spec/fixtures/repositories/Mouse-Hack/hugo-pages.wiki.git" }
+    let(:rugged_wiki) { Rugged::Repository.new(wiki_fixture_path) }
+
     it "clones the wiki information" do
       expect(archive_builder).to receive(:archive_repo).with(
         clone_url: "https://gitlab.com/Mouse-Hack/hugo-pages.wiki.git",
         to: "#{archive_builder.staging_dir}/repositories/Mouse-Hack/hugo-pages.wiki.git",
         credentials: be_a(Rugged::Credentials::UserPassword)
-      )
+      ).and_return(rugged_wiki)
+
       archive_builder.clone_wiki(project)
+    end
+
+    context "when wiki head ref is master" do
+      before(:each) { allow(archive_builder).to receive(:archive_repo).and_return(rugged_wiki) }
+
+      it "does not attempt to change the head ref to master" do
+        expect(rugged_wiki.branches).to_not receive(:rename)
+
+        archive_builder.clone_wiki(project)
+      end
+    end
+
+    context "when wiki head ref not master" do
+      let(:wiki_fixture_path) { "spec/fixtures/repositories/Mouse-Hack/wiki-with-main-branch.wiki.git" }
+
+      before(:each) { allow(archive_builder).to receive(:archive_repo).and_return(rugged_wiki) }
+
+      it "changes the head ref to master" do
+        expect(rugged_wiki.branches).to receive(:rename).with("main", "master")
+
+        archive_builder.clone_wiki(project)
+      end
     end
   end
 

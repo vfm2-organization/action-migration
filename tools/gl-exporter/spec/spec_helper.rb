@@ -43,7 +43,7 @@ RSpec.configure do |config|
     allow_any_instance_of(GlExporter::Logging).to receive(:output_logger).and_return(NullLogger.new)
   end
 
-  config.before(:each, :v3) { api_v3! }
+  config.before(:each, :v3) { skip "API V3 is no longer supported." }
   config.before(:each, :v4) { api_v4! }
 
   config.after(:each) do

@@ -1,0 +1,11 @@
+language: ruby
+cache: bundler
+rvm:
+- 2.4.1
+sudo: false
+before_script:
+  - ./script/bootstrap
+script:
+  - bundle exec rspec
+notifications:
+  email: false
