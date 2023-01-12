@@ -3,6 +3,7 @@ const sleep = require('./sleep')
 const Logger = require('../utils/logger')
 
 module.exports = async (migration, status) => {
+  const waitTimes = [10, 5, 20, 30, 45, 60, 120, 150]
   const logger = new Logger(migration)
 
   let state
@@ -10,8 +11,11 @@ module.exports = async (migration, status) => {
 
   do {
     if (checks > 0) {
-      logger.sleep(10)
-      await sleep(10)
+      // The first time is smaller intentionally. Hence counter starts at 1.
+      const sleepTime = waitTimes[checks % waitTimes.length]
+
+      logger.sleep(sleepTime)
+      await sleep(sleepTime)
     }
 
     state = await checkStatus(migration)

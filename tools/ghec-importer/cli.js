@@ -10,7 +10,8 @@ const auditSummaryCommand = require('./src/commands/audit-summary')
 const getDetailsCommand = require('./src/commands/get-details')
 const { command: makeInternalCommand } = require('./src/commands/make-internal')
 const listRepositoriesCommand = require('./src/commands/list-repositories')
-const { command: deleteRepositoriesCommand } = require('./src/commands/delete-repositories')
+const { command: enableFeaturesCommand } = require('./src/commands/enable-features')
+const { command: deleteImportedCommand } = require('./src/commands/delete-imported')
 
 async function run() {
   program.addCommand(prepareArchiveCommand())
@@ -19,7 +20,8 @@ async function run() {
   program.addCommand(auditSummaryCommand())
   program.addCommand(makeInternalCommand())
   program.addCommand(listRepositoriesCommand())
-  program.addCommand(deleteRepositoriesCommand())
+  program.addCommand(enableFeaturesCommand())
+  program.addCommand(deleteImportedCommand())
   program.addCommand(getDetailsCommand())
 
   try {

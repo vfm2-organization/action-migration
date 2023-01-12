@@ -11,12 +11,14 @@ module.exports = {
     command
       .description('Creates a new migration archive without the models specified in the -r|--remove option')
       .arguments('<archive-path>')
-      .requiredOption('-r, --remove <models>', "projects (all projects), org-teams (teams that don't belong to migrated repositories)", value => value.split(','))
+      .requiredOption('-r, --remove <models>', "projects (all projects), org-projects (organization-level projects), org-teams (teams that don't belong to migrated repositories)", value =>
+        value.split(',')
+      )
       .option('-o, --output-path <string>', 'directory to create the new migration archive in', '.')
       .option('-s, --staging-path <string>', 'directory to be used for storing files during preparation', 'tmp')
       .option('-S, --suffix <string>', 'suffix to be appended to the new migration archive', 'prepared')
       .option('-d, --debug', 'display debug output')
-      .option('--color', 'Force colors (use --color to force when autodetect disables colors (eg: piping')
+      .option('--color', 'Force colors (use --color to force when autodetect disables colors (eg: piping))')
       .action(run)
 
     return command
@@ -68,7 +70,7 @@ function createTemporaryDirectory(stagingPath) {
 }
 
 function deleteTemporaryDirectory(temporaryDirectory) {
-  fs.rmdirSync(temporaryDirectory, { recursive: true })
+  fs.rmSync(temporaryDirectory, { recursive: true, force: true })
 }
 
 function deletePreparedArchive(preparedArchivePath) {
@@ -91,6 +93,29 @@ async function prepare(options, temporaryDirectory, remove) {
 
       logger.step(`Removing ${projects.length} project(s)`)
       fs.unlinkSync(filePath)
+    }
+
+    if (remove.includes('org-projects') && file.startsWith('projects_')) {
+      let projects = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+
+      // Filter out organization projects
+      // Repository project URL (6 slashes, 7 parts):
+      // https://HOSTNAME/ORGANIZATION/REPOSITORY/projects/1
+      // Organization project URL (5 slashes, 6 parts):
+      // https://HOSTNAME/ORGANIZATION/projects/1
+      const repositoryProjects = projects.filter(project => {
+        if (project.url.split('/').length === 6) {
+          logger.debug(`Removing org-project (${project.url})`)
+          return false
+        } else {
+          return true
+        }
+      })
+
+      logger.step(`Removing ${projects.length - repositoryProjects.length} org-project(s)`)
+
+      const jsonContent = JSON.stringify(repositoryProjects, null, 2)
+      fs.writeFileSync(filePath, jsonContent)
     }
 
     if (remove.includes('teams') && file.startsWith('teams_')) {

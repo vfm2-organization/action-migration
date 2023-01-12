@@ -16,7 +16,7 @@ module.exports = () => {
     .option('--filter-state <state>', 'Filter by resource state. Eg FAILED')
     .option('--model <model>', 'Filter by model name. Eg repository')
     .option('-d, --debug', 'display debug output')
-    .option('--color', 'Force colors (use --color to force when autodetect disables colors (eg: piping')
+    .option('--color', 'Force colors (use --color to force when autodetect disables colors (eg: piping))')
     .action(run)
 
   return command

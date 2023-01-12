@@ -21,7 +21,7 @@ module.exports = {
       .requiredOption('-t, --target-organization <string>', 'the GitHub.com organization the migration belongs to', process.env.GHEC_IMPORTER_TARGET_ORGANIZATION)
       .option('-y, --yes', 'do not prompt for confirmation')
       .option('-d, --debug', 'display debug output')
-      .option('--color', 'Force colors (use --color to force when autodetect disables colors (eg: piping')
+      .option('--color', 'Force colors (use --color to force when autodetect disables colors (eg: piping))')
       .action(run)
 
     return command
