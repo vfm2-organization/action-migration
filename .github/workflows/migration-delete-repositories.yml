@@ -49,7 +49,7 @@ jobs:
         run: npm link
 
       - name: Delete repositories
-        run: ghec-importer delete-repositories --guid ${{ steps.migration-guid.outputs.result }} --yes
+        run: ghec-importer delete-imported --guid ${{ steps.migration-guid.outputs.result }} --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GHEC_IMPORTER_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}
