@@ -2,13 +2,6 @@ name: Shared GitHub Enterprise Cloud GEI Migration
 
 on:
   workflow_call:
-    inputs:
-      user-mappings-path:
-        required: true
-        type: string
-      user-mappings-source-url:
-        required: true
-        type: string
     secrets:
       GHEC_ADMIN_TOKEN:
         required: true
@@ -68,6 +61,14 @@ jobs:
           script: |
             return context.payload.comment.body.match('dry-run') ? 'Dry-run' : 'Production'
 
+      - name: Create lock flag based on migration type
+        uses: actions/github-script@v5
+        id: lock-flag
+        with:
+          result-encoding: string
+          script: |
+            return '${{ steps.migration-type.outputs.result }}' === 'Production' ? '--lock-source-repo' : ''
+
       - name: Parse issue body
         id: parse-issue-body
         uses: actions/github-script@v5
@@ -104,16 +105,19 @@ jobs:
 
           foreach ($Repo in $RepoSources) {
             $MigrationID = ExecAndGetMigrationID {
-              gei migrate-repo                                                             `
+              gei migrate-repo                                                                `
               --source-repo $Repo.name                                                        `
               --target-repo $Repo.name                                                        `
               --github-source-org $Repo.org                                                   `
-              --github-target-org '${{ secrets.GHEC_TARGET_ORGANIZATION }}' `
+              --github-target-org '${{ secrets.GHEC_TARGET_ORGANIZATION }}'                   `
               --azure-storage-connection-string '${{ secrets.GEI_AZURE_CONNECTION_STRING }}'  `
               --ghes-api-url "https://$($Repo.host)/api/v3"                                   `
-              --lock-source-repo
+              ${{ steps.lock-flag.outputs.result }}
             }
-            $RepoMigrations[$repo.name] = $MigrationID
+            
+            if (!$null -eq $MigrationID) {
+              $RepoMigrations[$repo.name] = $MigrationID
+            }
           }
 
           foreach ($RepoName in $RepoMigrations.Keys) {
@@ -123,15 +127,16 @@ jobs:
           GH_PAT: ${{ secrets.GHEC_ADMIN_TOKEN }}
           GH_SOURCE_PAT: ${{ secrets.GHES_ADMIN_TOKEN }}
 
-      - name: Check out repository for file "user-mappings.csv"
-        uses: actions/checkout@v3
-
       - name: Reclaim mannequins
-        run: >
-          gei reclaim-mannequin
-          --csv ${{ inputs.user-mappings-path }}
-          --github-target-org ${{ secrets.GHEC_TARGET_ORGANIZATION }}
-          --github-target-pat ${{ secrets.GHEC_ADMIN_TOKEN }}
+        run: |
+          gei generate-mannequin-csv \
+            --output mannequin.csv \
+            --github-target-org ${{ secrets.GHEC_TARGET_ORGANIZATION }} \
+            --github-target-pat ${{ secrets.GHEC_ADMIN_TOKEN }}
+          gei reclaim-mannequin \
+            --csv mannequin.csv \
+            --github-target-org ${{ secrets.GHEC_TARGET_ORGANIZATION }} \
+            --github-target-pat ${{ secrets.GHEC_ADMIN_TOKEN }}
 
       - if: failure()
         name: Report failed migration

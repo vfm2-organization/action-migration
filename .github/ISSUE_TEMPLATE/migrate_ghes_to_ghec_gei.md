@@ -1,7 +1,7 @@
 ---
-name: GEI Migrate from GitHub Enterprise Server
-about: Migrate from GitHub Enterprise Server to GitHub Enterprise Cloud using GEI
-title: 'GitHub Enterprise Server to GitHub GEI migration'
+name: Migrate repositories from GitHub Enterprise Server [GEI]
+about: Migrate repositories from GitHub Enterprise Server to GitHub Enterprise Cloud using GitHub Enterprise Importer
+title: 'GitHub Enterprise Server to GitHub Enterprise Cloud [GEI]'
 labels: 'github-enterprise-server, migration, gei'
 assignees: ''
 
