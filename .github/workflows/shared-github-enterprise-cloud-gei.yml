@@ -104,6 +104,8 @@ jobs:
           $RepoSources = ConvertFrom-Json '${{ steps.parse-issue-body.outputs.repositories-json }}'
 
           foreach ($Repo in $RepoSources) {
+            Write-Host "::group::$($Repo.org)/$($Repo.name)"
+
             $MigrationID = ExecAndGetMigrationID {
               gei migrate-repo                                                                `
               --source-repo $Repo.name                                                        `
@@ -118,6 +120,8 @@ jobs:
             if (!$null -eq $MigrationID) {
               $RepoMigrations[$repo.name] = $MigrationID
             }
+
+            Write-Host "::endgroup::"
           }
 
           foreach ($RepoName in $RepoMigrations.Keys) {
