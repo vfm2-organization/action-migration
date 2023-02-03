@@ -8,7 +8,8 @@ jobs:
   migrate:
     if: contains(github.event.issue.labels.*.name, 'github-enterprise-server') &&
         contains(github.event.issue.labels.*.name, 'migration') &&
-        contains(github.event.issue.labels.*.name, 'gei')
+        contains(github.event.issue.labels.*.name, 'gei') &&
+        !startsWith(github.event.comment.body, '/delete-repositories')
     uses: ./.github/workflows/shared-github-enterprise-cloud-gei.yml
     with:
       user-mappings-path: user-mappings.csv
