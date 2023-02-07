@@ -1,0 +1,181 @@
+name: Shared GitHub Enterprise Cloud GEI Migration
+
+on:
+  workflow_call:
+    secrets:
+      GHEC_ADMIN_TOKEN:
+        required: true
+      GHEC_TARGET_ORGANIZATION:
+        required: true
+      GHES_ADMIN_TOKEN:
+        required: true
+      GEI_AZURE_CONNECTION_STRING:
+        required: true
+
+jobs:
+  migrate:
+    name: GEI Migrate
+    runs-on: self-hosted
+
+    # Maximize the timeout to 50,400 minutes (35 days) from the default
+    # limit of 360 minutes (6 hours), as migrations can take some tme.
+    timeout-minutes: 50400
+
+    steps:
+      - name: Install common dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes git unzip curl wget apt-transport-https software-properties-common
+
+      - name: Install GitHub Enterprise Importer
+        run: |
+          if [ -z "$(command -v gei)" ]
+          then
+            wget https://github.com/github/gh-gei/releases/download/v0.32/gei-linux-amd64
+            sudo install --owner root --group root --mode 755 gei-linux-amd64 /usr/local/bin/gei
+          fi
+
+      - if: runner.debug
+        name: GEI version number
+        run: gei --version
+
+      - name: Install PowerShell
+        run: |
+          if [ -z "$(command -v pwsh)" ]
+          then
+            wget "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
+            sudo dpkg --install packages-microsoft-prod.deb
+            sudo apt-get update
+            sudo apt-get install --yes powershell
+          fi
+
+      - if: runner.debug
+        name: PowerShell version number
+        run: pwsh --version
+
+      - name: Set migration type
+        uses: actions/github-script@v5
+        id: migration-type
+        with:
+          result-encoding: string
+          script: |
+            return context.payload.comment.body.match('dry-run') ? 'Dry-run' : 'Production'
+
+      - name: Create lock flag based on migration type
+        uses: actions/github-script@v5
+        id: lock-flag
+        with:
+          result-encoding: string
+          script: |
+            return '${{ steps.migration-type.outputs.result }}' === 'Production' ? '--lock-source-repo' : ''
+
+      - name: Parse issue body
+        id: parse-issue-body
+        uses: actions/github-script@v5
+        with:
+          script: |
+            require('./.github/scripts/parse-issue-body.js')({context, core})
+
+      - name: Migrate repositories
+        shell: pwsh
+        run: |
+          function Exec {
+            param (
+              [scriptblock]$ScriptBlock
+            )
+            & @ScriptBlock
+            if ($lastexitcode -ne 0) {
+              exit $lastexitcode
+            }
+          }
+
+          function ExecAndGetMigrationID {
+            param (
+              [scriptblock]$ScriptBlock
+            )
+            $MigrationID = Exec $ScriptBlock | ForEach-Object {
+              Write-Host $_
+              $_
+            } | Select-String -Pattern "\(ID: (.+)\)" | ForEach-Object { $_.matches.groups[1] }
+            return $MigrationID
+          }
+
+          $RepoMigrations = [ordered]@{}
+          $RepoSources = ConvertFrom-Json '${{ steps.parse-issue-body.outputs.repositories-json }}'
+
+          foreach ($Repo in $RepoSources) {
+            Write-Host "::group::$($Repo.org)/$($Repo.name)"
+
+            $MigrationID = ExecAndGetMigrationID {
+              gei migrate-repo                                                                `
+              --source-repo $Repo.name                                                        `
+              --target-repo $Repo.name                                                        `
+              --github-source-org $Repo.org                                                   `
+              --github-target-org '${{ secrets.GHEC_TARGET_ORGANIZATION }}'                   `
+              --azure-storage-connection-string '${{ secrets.GEI_AZURE_CONNECTION_STRING }}'  `
+              --ghes-api-url "https://$($Repo.host)/api/v3"                                   `
+              ${{ steps.lock-flag.outputs.result }}
+            }
+            
+            if (!$null -eq $MigrationID) {
+              $RepoMigrations[$repo.name] = $MigrationID
+            }
+
+            Write-Host "::endgroup::"
+          }
+
+          foreach ($RepoName in $RepoMigrations.Keys) {
+            gei wait-for-migration --migration-id $RepoMigrations[$RepoName]
+          }
+        env:
+          GH_PAT: ${{ secrets.GHEC_ADMIN_TOKEN }}
+          GH_SOURCE_PAT: ${{ secrets.GHES_ADMIN_TOKEN }}
+
+      - name: Reclaim mannequins
+        run: |
+          gei generate-mannequin-csv \
+            --output mannequin.csv \
+            --github-target-org ${{ secrets.GHEC_TARGET_ORGANIZATION }} \
+            --github-target-pat ${{ secrets.GHEC_ADMIN_TOKEN }}
+          gei reclaim-mannequin \
+            --csv mannequin.csv \
+            --github-target-org ${{ secrets.GHEC_TARGET_ORGANIZATION }} \
+            --github-target-pat ${{ secrets.GHEC_ADMIN_TOKEN }}
+
+      - if: failure()
+        name: Report failed migration
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const body = `:no_entry: **${{ steps.migration-type.outputs.result }} migration failed.** [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            })
+
+      - name: Add delete repositories comment
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const migrationType = '${{ steps.migration-type.outputs.result }}'
+
+            if (migrationType === 'Dry-run') {
+              let body = `In order to delete the migrated repositories of the dry-run, add a comment with the following slash command:
+
+              \`\`\`
+              /delete-repositories ${{ steps.import.outputs.migration-guid }}
+              \`\`\`
+              `
+
+              // remove leading whitespace
+              body = body.replace(/  +/g, '')
+
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body
+              })
+            }

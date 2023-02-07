@@ -9,6 +9,13 @@ source,target
 u0001,steffen
 ```
 
+If migrating with GitHub Enterprise Importer (GEI), create `user-mappings.csv` in the following format:
+
+```csv
+mannequin-user,mannequin-id,target-user
+u0001,u0001,steffen
+```
+
 To do this, create a pull request to this repository with changes to `user-mappings.csv` file.
 
 ## Step 2: Create an issue from template
@@ -60,20 +67,22 @@ Create the following [issue labels](https://docs.github.com/en/issues/using-labe
 2. `external-gitlab` (for gitlab)
 3. `internal-gitlab` (for gitlab)
 4. `migration` (for all)
+5. `gei` (for ghes)
 
 ### Secrets
 
 Create these [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) on the repository that is hosting this migration utility:
 
-| Secret                   | Description                                                                            | Needed For   |
-|--------------------------|----------------------------------------------------------------------------------------|------------- |
-| GHEC_ADMIN_TOKEN         | PAT of account with permissions in target org in GitHub.com                            | GHES, GitLab |
-| GHEC_TARGET_ORGANIZATION | Name of target organization in GitHub.com (eg: `myorg`)                                | GHES, GitLab |
-| GHES_ADMIN_USERNAME      | GitHub Enterprise server admin username                                                | GHES         |
-| GHES_ADMIN_TOKEN         | GitHub Enterprise Server admin console password/token                                  | GHES         |
-| GITLAB_USERNAME          | GitLab username                                                                        | GitLab       |
-| GITLAB_API_PRIVATE_TOKEN | GitLab API Token                                                                       | GitLab       |
-| GITLAB_API_ENDPOINT      | GitLab API URL without the slash at the end; eg: `https://gitlab.example.com/api/v4`   | GitLab       |
+| Secret                      | Description                                                                            | Needed For   |
+|-----------------------------|----------------------------------------------------------------------------------------|------------- |
+| GHEC_ADMIN_TOKEN            | PAT of account with permissions in target org in GitHub.com                            | GHES, GitLab |
+| GHEC_TARGET_ORGANIZATION    | Name of target organization in GitHub.com (eg: `myorg`)                                | GHES, GitLab |
+| GHES_ADMIN_USERNAME         | GitHub Enterprise server admin username                                                | GHES         |
+| GHES_ADMIN_TOKEN            | GitHub Enterprise Server admin console password/token                                  | GHES         |
+| GITLAB_USERNAME             | GitLab username                                                                        | GitLab       |
+| GITLAB_API_PRIVATE_TOKEN    | GitLab API Token                                                                       | GitLab       |
+| GITLAB_API_ENDPOINT         | GitLab API URL without the slash at the end; eg: `https://gitlab.example.com/api/v4`   | GitLab       |
+| GEI_AZURE_CONNECTION_STRING | Connection string for an Azure storage account (required for GEI).                     | GHES         |
 
 ### Runner Setup
 
