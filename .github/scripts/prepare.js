@@ -46,7 +46,7 @@ module.exports = async ({github, context, options}) => {
     \`\`\`
     `
   } else {
-    commentBody = '😢 The issue body could not be parsed. Please open a new issue using an issue template.'
+    commentBody = '😢 The issue body could not be parsed. Please edit the issue body or open a new issue using an issue template.'
   }
   
   await github.rest.issues.createComment({

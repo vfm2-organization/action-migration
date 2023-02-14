@@ -123,3 +123,7 @@ jobs:
          username: ${{ github.ref }}
          password: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+### Note on Tools
+
+This repo isn't intended to have the latest copies of the [ghec-importer](https://github.com/github/ghec-importer) and [gl-exporter](https://github.com/github/gl-exporter). If desired, grab the latest versions of the code and update the copy in the `./tools` directory.
