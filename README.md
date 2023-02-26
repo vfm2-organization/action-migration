@@ -108,6 +108,14 @@ If necessary, update the self-hosted runner label in [.github/workflows/migratio
 1. Update the GitLab URL for internal GitLab migrations in [.github/workflows/migration-external-gitlab.yml#L21](/.github/workflows/migration-external-gitlab.yml#L21)
 2. Update the GitLab URL for external GitLab migrations in [.github/workflows/migration-internal-gitlab.yml#L24](/.github/workflows/migration-internal-gitlab.yml#L24)
 
+**For GEI**:
+
+1. If not running on a Ubuntu runner, or if you don't want to automatically install the pre-requisites, switch the `env.INSTALL_PREREQS` to `'false'` in
+[.github/workflows/shared-github-enterprise-cloud-gei.yml#L26](/.github/workflows/shared-github-enterprise-cloud-gei.yml#L26)
+2. Ensure that the `GHES_ADMIN_TOKEN` has the [appropriate PAT scopes](https://docs.github.com/en/early-access/enterprise-importer/preparing-to-migrate-with-github-enterprise-importer/managing-access-for-github-enterprise-importer#required-scopes-for-personal-access-tokens) for running a migration (source organization) or has been [granted the migrator role](https://docs.github.com/en/early-access/enterprise-importer/preparing-to-migrate-with-github-enterprise-importer/granting-the-migrator-role)
+3. Note that the `/delete-repositories` functionality does not work for cleaning up GEI-migrated repositories
+
+
 ### Note on GitLab Exports
 
 Working through the `gl-exporter` ruby runtime [requirements](/tools/gl-exporter/docs/Requirements.md) can sometimes be tricky. It's possible to build and push the [Dockerfile](/tools/gl-exporter/Dockerfile) to the repository and run as a container job:

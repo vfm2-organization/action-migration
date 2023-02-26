@@ -20,18 +20,31 @@ jobs:
     # Maximize the timeout to 50,400 minutes (35 days) from the default
     # limit of 360 minutes (6 hours), as migrations can take some tme.
     timeout-minutes: 50400
+    
+    env:
+      # switch to 'false' if you don't want to run the apt-get commands and GEI
+      INSTALL_PREREQS: 'true'
+  
+    if: github.event_name == 'issue_comment' &&
+      (startsWith(github.event.comment.body, '/run-dry-run-migration') ||
+      startsWith(github.event.comment.body, '/run-production-migration'))
 
     steps:
+      - name: Check out scripts
+        uses: actions/checkout@v3
+
       - name: Install common dependencies
+        if: ${{ env.INSTALL_PREREQS == 'true' }}
         run: |
           sudo apt-get update
           sudo apt-get install --yes git unzip curl wget apt-transport-https software-properties-common
 
       - name: Install GitHub Enterprise Importer
+        if: ${{ env.INSTALL_PREREQS == 'true' }}
         run: |
           if [ -z "$(command -v gei)" ]
           then
-            wget https://github.com/github/gh-gei/releases/download/v0.32/gei-linux-amd64
+            wget https://github.com/github/gh-gei/releases/latest/download/gei-linux-amd64
             sudo install --owner root --group root --mode 755 gei-linux-amd64 /usr/local/bin/gei
           fi
 
@@ -40,6 +53,7 @@ jobs:
         run: gei --version
 
       - name: Install PowerShell
+        if: ${{ env.INSTALL_PREREQS == 'true' }}
         run: |
           if [ -z "$(command -v pwsh)" ]
           then
@@ -54,7 +68,7 @@ jobs:
         run: pwsh --version
 
       - name: Set migration type
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         id: migration-type
         with:
           result-encoding: string
@@ -62,7 +76,7 @@ jobs:
             return context.payload.comment.body.match('dry-run') ? 'Dry-run' : 'Production'
 
       - name: Create lock flag based on migration type
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         id: lock-flag
         with:
           result-encoding: string
@@ -71,7 +85,7 @@ jobs:
 
       - name: Parse issue body
         id: parse-issue-body
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             require('./.github/scripts/parse-issue-body.js')({context, core})
@@ -142,9 +156,33 @@ jobs:
             --github-target-org ${{ secrets.GHEC_TARGET_ORGANIZATION }} \
             --github-target-pat ${{ secrets.GHEC_ADMIN_TOKEN }}
 
+      - if: steps.parse-issue-body.outputs.target-repository-visibility == 'Internal'
+        name: Update repo visibility
+        run: |
+          echo "Updating repo visibility..."
+          visibility=${{ steps.parse-issue-body.outputs.target-repository-visibility }}
+          repos="${{ steps.parse-issue-body.outputs.repositories }}"
+          
+          for repo in ${repos//,/ }
+          do
+            repo_name=$(echo $repo | awk -F/ '{print $5}' | tr -d '\r')
+            echo "::group::${{ secrets.GHEC_TARGET_ORGANIZATION }}/$repo_name"
+            echo "------------------"
+            echo "Repo: $repo_name"
+            if ! curl -s -X PATCH \
+              -H "Authorization: Bearer ${{ secrets.GHEC_ADMIN_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/${{ secrets.GHEC_TARGET_ORGANIZATION }}/$repo_name \
+              -d '{"visibility":"internal"}' ;
+            then echo "" && echo "::notice::repo visibility was not updated on ${{ secrets.GHEC_TARGET_ORGANIZATION }}/$repo_name" ;
+            else echo "" && echo "✓ Edited repository ${{ secrets.GHEC_TARGET_ORGANIZATION }}/$repo_name" ;
+            fi
+            echo "::endgroup::"
+          done
+
       - if: failure()
         name: Report failed migration
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const body = `:no_entry: **${{ steps.migration-type.outputs.result }} migration failed.** [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
@@ -155,27 +193,15 @@ jobs:
               body
             })
 
-      - name: Add delete repositories comment
-        uses: actions/github-script@v5
+      - if: ${{ success() }}
+        name: Report successful migration
+        uses: actions/github-script@v6
         with:
           script: |
-            const migrationType = '${{ steps.migration-type.outputs.result }}'
-
-            if (migrationType === 'Dry-run') {
-              let body = `In order to delete the migrated repositories of the dry-run, add a comment with the following slash command:
-
-              \`\`\`
-              /delete-repositories ${{ steps.import.outputs.migration-guid }}
-              \`\`\`
-              `
-
-              // remove leading whitespace
-              body = body.replace(/  +/g, '')
-
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body
-              })
-            }
+            const body = `:tada: **${{ steps.migration-type.outputs.result }} migration succeeded.** [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            })

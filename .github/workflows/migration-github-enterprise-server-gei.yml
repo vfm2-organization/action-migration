@@ -1,4 +1,4 @@
-name: GEI Migration from GitHub Enterprise Server
+name: Migration from GitHub Enterprise Server [GEI]
 
 on:
   issue_comment:
