@@ -117,5 +117,5 @@ jobs:
       - if: ${{ always() }}
         name: Clean up files on server
         run: |
-          $GHES_SSH -- "[ -e /data/user/tmp/${{ env.MIGRATION_GUID }}.tar.gz ] && sudo rm /data/user/tmp/${{ env.MIGRATION_GUID }}.tar.gz"
-          $GHES_SSH -- "[ -e repositories.txt ] && rm repositories.txt"
+          $GHES_SSH -- '[ -e /data/user/tmp/${{ env.MIGRATION_GUID }}.tar.gz ] && sudo rm /data/user/tmp/${{ env.MIGRATION_GUID }}.tar.gz'
+          $GHES_SSH -- '[ -e repositories.txt ] && rm repositories.txt'
