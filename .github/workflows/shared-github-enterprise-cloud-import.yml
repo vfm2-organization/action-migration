@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Set migration type
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         id: migration-type
         with:
           result-encoding: string
@@ -40,17 +40,17 @@ jobs:
             return context.payload.comment.body.match('dry-run') ? 'Dry-run' : 'Production'
 
       - name: Check out repository for ghec-importer, user-mappings.csv file and scripts
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Parse issue body
         id: parse-issue-body
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             require('./.github/scripts/parse-issue-body.js')({context, core})
 
       - name: Download migration archive from artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ env.MIGRATION_GUID }}.tar.gz
 
@@ -63,7 +63,7 @@ jobs:
       - name: Output subset-user-mappings.csv content in log (for debugging)
         run: cat ../../subset-user-mappings.csv
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: '14'
 
@@ -94,7 +94,7 @@ jobs:
 
       - if: ${{ failure() }}
         name: Report failed migration
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const body = `:no_entry: **${{ steps.migration-type.outputs.result }} migration failed.** [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
@@ -107,7 +107,7 @@ jobs:
 
       - if: ${{ success() }}
         name: Add delete repositories comment
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const migrationType = '${{ steps.migration-type.outputs.result }}'
