@@ -35,10 +35,10 @@ jobs:
 
     steps:
       - name: Check out scripts
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set migration type
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         id: migration-type
         with:
           result-encoding: string
@@ -46,7 +46,7 @@ jobs:
             return context.payload.comment.body.match('dry-run') ? 'Dry-run' : 'Production'
 
       - name: Update issue with running state
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const body = `:hourglass_flowing_sand: Running **${"${{ steps.migration-type.outputs.result }}".toLowerCase()}** migration. [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
@@ -59,7 +59,7 @@ jobs:
             })
 
       - name: Parse repositories from issue body and write to file
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const fs = require('fs')
@@ -94,7 +94,7 @@ jobs:
         run: $GHES_SCP admin@$GHES_SSH_HOST:/data/user/tmp/$MIGRATION_GUID.tar.gz .
 
       - name: Upload migration archive to artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ env.MIGRATION_GUID }}.tar.gz
           path: ./${{ env.MIGRATION_GUID }}.tar.gz
@@ -103,7 +103,7 @@ jobs:
 
       - if: ${{ failure() }}
         name: Report failed migration
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         with:
           script: |
             const body = `:no_entry: **Export failed.** [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
