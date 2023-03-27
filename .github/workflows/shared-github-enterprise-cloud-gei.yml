@@ -128,7 +128,7 @@ jobs:
               --source-repo $Repo.name                                                        `
               --target-repo $Repo.name                                                        `
               --github-source-org $Repo.org                                                   `
-              --github-target-org '${{ vars.GHEC_TARGET_ORGANIZATION }}'                   `
+              --github-target-org '${{ inputs.GHEC_TARGET_ORGANIZATION }}'                   `
               --azure-storage-connection-string '${{ secrets.GEI_AZURE_CONNECTION_STRING }}'  `
               --ghes-api-url "https://$($Repo.host)/api/v3"                                   `
               ${{ steps.lock-flag.outputs.result }}
@@ -152,11 +152,11 @@ jobs:
         run: |
           gei generate-mannequin-csv \
             --output mannequin.csv \
-            --github-target-org ${{ vars.GHEC_TARGET_ORGANIZATION }} \
+            --github-target-org ${{ inputs.GHEC_TARGET_ORGANIZATION }} \
             --github-target-pat ${{ secrets.GHEC_ADMIN_TOKEN }}
           gei reclaim-mannequin \
             --csv mannequin.csv \
-            --github-target-org ${{ vars.GHEC_TARGET_ORGANIZATION }} \
+            --github-target-org ${{ inputs.GHEC_TARGET_ORGANIZATION }} \
             --github-target-pat ${{ secrets.GHEC_ADMIN_TOKEN }}
 
       - if: steps.parse-issue-body.outputs.target-repository-visibility == 'Internal'
@@ -169,16 +169,16 @@ jobs:
           for repo in ${repos//,/ }
           do
             repo_name=$(echo $repo | awk -F/ '{print $5}' | tr -d '\r')
-            echo "::group::${{ vars.GHEC_TARGET_ORGANIZATION }}/$repo_name"
+            echo "::group::${{ inputs.GHEC_TARGET_ORGANIZATION }}/$repo_name"
             echo "------------------"
             echo "Repo: $repo_name"
             if ! curl -s -X PATCH \
               -H "Authorization: Bearer ${{ secrets.GHEC_ADMIN_TOKEN }}" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
-              https://api.github.com/repos/${{ vars.GHEC_TARGET_ORGANIZATION }}/$repo_name \
+              https://api.github.com/repos/${{ inputs.GHEC_TARGET_ORGANIZATION }}/$repo_name \
               -d '{"visibility":"internal"}' ;
-            then echo "" && echo "::notice::repo visibility was not updated on ${{ vars.GHEC_TARGET_ORGANIZATION }}/$repo_name" ;
-            else echo "" && echo "✓ Edited repository ${{ vars.GHEC_TARGET_ORGANIZATION }}/$repo_name" ;
+            then echo "" && echo "::notice::repo visibility was not updated on ${{ inputs.GHEC_TARGET_ORGANIZATION }}/$repo_name" ;
+            else echo "" && echo "✓ Edited repository ${{ inputs.GHEC_TARGET_ORGANIZATION }}/$repo_name" ;
             fi
             echo "::endgroup::"
           done
