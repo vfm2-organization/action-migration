@@ -12,9 +12,10 @@ on:
       ghes-ssh-host:
         type: string
         required: true
-    secrets:
       GHES_ADMIN_USERNAME:
+        type: string
         required: true
+    secrets:
       GHES_ADMIN_TOKEN:
         required: true
 
@@ -87,7 +88,7 @@ jobs:
       - name: Export repositories
         run: $GHES_SSH -- ghe-migrator export --guid=$MIGRATION_GUID --username=$GHES_ADMIN_USERNAME --pat=$GHES_ADMIN_TOKEN
         env:
-          GHES_ADMIN_USERNAME: ${{ secrets.GHES_ADMIN_USERNAME }}
+          GHES_ADMIN_USERNAME: ${{ vars.GHES_ADMIN_USERNAME }}
           GHES_ADMIN_TOKEN: ${{ secrets.GHES_ADMIN_TOKEN }}
 
       - name: Download migration archive from GHES

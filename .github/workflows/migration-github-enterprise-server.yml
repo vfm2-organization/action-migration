@@ -11,8 +11,8 @@ jobs:
     with:
       runner: ghes-migration
       ghes-ssh-host: github.steffenhiller.com
+      GHES_ADMIN_USERNAME: ${{vars.GHES_ADMIN_USERNAME}}}
     secrets:
-      GHES_ADMIN_USERNAME: ${{ secrets.GHES_ADMIN_USERNAME }}
       GHES_ADMIN_TOKEN: ${{ secrets.GHES_ADMIN_TOKEN }}
 
   import:
