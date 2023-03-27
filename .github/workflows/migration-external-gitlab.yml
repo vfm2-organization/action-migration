@@ -10,9 +10,9 @@ jobs:
     uses: ./.github/workflows/shared-gitlab-export.yml
     with:
       GITLAB_USERNAME: ${{ vars.EXTERNAL_GITLAB_USERNAME}}
+      GITLAB_API_ENDPOINT: ${{ vars.EXTERNAL_GITLAB_API_ENDPOINT }}
     secrets:
       GITLAB_API_PRIVATE_TOKEN: ${{ secrets.EXTERNAL_GITLAB_API_PRIVATE_TOKEN }}
-      GITLAB_API_ENDPOINT: ${{ secrets.EXTERNAL_GITLAB_API_ENDPOINT }}
 
   import:
     needs: export

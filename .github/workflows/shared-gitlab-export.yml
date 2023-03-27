@@ -15,10 +15,11 @@ on:
       GITLAB_USERNAME:
         required: true
         type: string
+      GITLAB_API_ENDPOINT:
+        required: true
+        type: string
     secrets:
       GITLAB_API_PRIVATE_TOKEN:
-        required: true
-      GITLAB_API_ENDPOINT:
         required: true
 
 jobs:
@@ -34,7 +35,7 @@ jobs:
       MIGRATION_GUID: ${{ inputs.migration-guid }}
       GITLAB_USERNAME: ${{ inputs.GITLAB_USERNAME }}
       GITLAB_API_PRIVATE_TOKEN: ${{ secrets.GITLAB_API_PRIVATE_TOKEN }}
-      GITLAB_API_ENDPOINT: ${{ secrets.GITLAB_API_ENDPOINT }}
+      GITLAB_API_ENDPOINT: ${{ inputs.GITLAB_API_ENDPOINT }}
 
     steps:
 

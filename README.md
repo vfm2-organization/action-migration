@@ -78,6 +78,7 @@ Create these [variables](https://docs.github.com/en/actions/learn-github-actions
 | GHEC_TARGET_ORGANIZATION    | Name of target organization in GitHub.com (eg: `myorg`)                                | GHES, GitLab |
 | GHES_ADMIN_USERNAME         | GitHub Enterprise server admin username                                                | GHES         |
 | GITLAB_USERNAME             | GitLab username                                                                        | GitLab       |
+| GITLAB_API_ENDPOINT         | GitLab API URL without the slash at the end; eg: `https://gitlab.example.com/api/v4`   | GitLab       |
 
 ### Secrets
 
@@ -88,7 +89,6 @@ Create these [secrets](https://docs.github.com/en/actions/security-guides/encryp
 | GHEC_ADMIN_TOKEN            | PAT of account with permissions in target org in GitHub.com                            | GHES, GitLab |
 | GHES_ADMIN_TOKEN            | GitHub Enterprise Server admin console password/token                                  | GHES         |
 | GITLAB_API_PRIVATE_TOKEN    | GitLab API Token                                                                       | GitLab       |
-| GITLAB_API_ENDPOINT         | GitLab API URL without the slash at the end; eg: `https://gitlab.example.com/api/v4`   | GitLab       |
 | GEI_AZURE_CONNECTION_STRING | Connection string for an Azure storage account (required for GEI).                     | GHES         |
 
 ### Runner Setup
