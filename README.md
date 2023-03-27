@@ -77,10 +77,11 @@ Create these [variables](https://docs.github.com/en/actions/learn-github-actions
 |-----------------------------|----------------------------------------------------------------------------------------|------------- |
 | GHEC_TARGET_ORGANIZATION    | Name of target organization in GitHub.com (eg: `myorg`)                                | GHES, GitLab |
 | GHES_ADMIN_USERNAME         | GitHub Enterprise server admin username                                                | GHES         |
+| GITHUB_USER_MAPPING_SOURCE_URL | GitHub URL for GitHub Enterprise Server migrations; eg: `https://github.example.com` | GHES         |
+| GHES_SSH_HOST               | GitHub Enterprise Server SSH host; eg: `github.example.com`                            | GHES         |
 | GITLAB_USERNAME             | GitLab username                                                                        | GitLab       |
 | GITLAB_API_ENDPOINT         | GitLab API URL without the slash at the end; eg: `https://gitlab.example.com/api/v4`   | GitLab       |
 | (INTERNAL/EXTERNAL)_GITLAB_MAPPING_SOURCE_URL | GitLab URL for internal/external GitLab migrations; eg: `https://gitlab.example.com`| GitLab |
-| GITHUB_USER_MAPPING_SOURCE_URL | GitHub URL for GitHub Enterprise Server migrations; eg: `https://github.example.com` | GHES         |
 
 ### Secrets
 
@@ -104,11 +105,6 @@ For GHES: Add the machine's SSH public key SSH to the [GitHub Enterprise Server 
 If necessary, update the self-hosted runner label in [.github/workflows/migration-github-enterprise-server.yml#L12](/.github/workflows/migration-github-enterprise-server.yml#L12) so that it picks up the designated runner - the runner label otherwise defaults to `self-hosted`.
 
 ### Workflow Modifications
-
-**For GHES**:
-
-1. Update the `ghes-ssh-host` in [.github/workflows/migration-github-enterprise-server.yml#L13](/.github/workflows/migration-github-enterprise-server.yml#L13)
-    - it should be in the format of: `github.company.com`
 
 **For GEI**:
 

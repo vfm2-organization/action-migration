@@ -10,7 +10,7 @@ jobs:
     uses: ./.github/workflows/shared-github-enterprise-server-export.yml
     with:
       runner: ghes-migration
-      ghes-ssh-host: github.steffenhiller.com
+      ghes-ssh-host: ${{ vars.GHES_SSH_HOST }} # github.steffenhiller.com
       GHES_ADMIN_USERNAME: ${{vars.GHES_ADMIN_USERNAME}}}
     secrets:
       GHES_ADMIN_TOKEN: ${{ secrets.GHES_ADMIN_TOKEN }}

@@ -21,7 +21,7 @@ jobs:
     uses: ./.github/workflows/shared-github-enterprise-cloud-import.yml
     with:
       user-mappings-path: ../../user-mappings.csv
-      user-mappings-source-url: https://gitlab.example.internal ${{ vars.INTERNAL_GITLAB_MAPPING_SOURCE_URL}}
+      user-mappings-source-url: ${{ vars.INTERNAL_GITLAB_MAPPING_SOURCE_URL}} # https://gitlab.example.internal 
       GHEC_TARGET_ORGANIZATION: ${{ vars.GHEC_TARGET_ORGANIZATION }}
     secrets:
       GHEC_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}
