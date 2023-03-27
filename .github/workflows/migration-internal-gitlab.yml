@@ -11,8 +11,8 @@ jobs:
     with:
       runner: internal
       setup-ruby: false
+      GITLAB_USERNAME: ${{ vars.INTERNAL_GITLAB_USERNAME}}
     secrets:
-      GITLAB_USERNAME: ${{ secrets.INTERNAL_GITLAB_USERNAME }}
       GITLAB_API_PRIVATE_TOKEN: ${{ secrets.INTERNAL_GITLAB_API_PRIVATE_TOKEN }}
       GITLAB_API_ENDPOINT: ${{ secrets.INTERNAL_GITLAB_API_ENDPOINT }}
 

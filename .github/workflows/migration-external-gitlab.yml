@@ -8,8 +8,9 @@ jobs:
   export:
     if: contains(github.event.issue.labels.*.name, 'external-gitlab')
     uses: ./.github/workflows/shared-gitlab-export.yml
+    with:
+      GITLAB_USERNAME: ${{ vars.EXTERNAL_GITLAB_USERNAME}}
     secrets:
-      GITLAB_USERNAME: ${{ secrets.EXTERNAL_GITLAB_USERNAME }}
       GITLAB_API_PRIVATE_TOKEN: ${{ secrets.EXTERNAL_GITLAB_API_PRIVATE_TOKEN }}
       GITLAB_API_ENDPOINT: ${{ secrets.EXTERNAL_GITLAB_API_ENDPOINT }}
 
