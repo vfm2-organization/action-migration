@@ -20,7 +20,7 @@ jobs:
     uses: ./.github/workflows/shared-github-enterprise-cloud-import.yml
     with:
       user-mappings-path: ../../user-mappings.csv
-      user-mappings-source-url: https://github.example.com
+      user-mappings-source-url: ${{ vars.GITHUB_USER_MAPPING_SOURCE_URL }} # https://github.example.com
       GHEC_TARGET_ORGANIZATION: ${{ vars.GHEC_TARGET_ORGANIZATION }}
     secrets:
       GHEC_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}

@@ -79,6 +79,8 @@ Create these [variables](https://docs.github.com/en/actions/learn-github-actions
 | GHES_ADMIN_USERNAME         | GitHub Enterprise server admin username                                                | GHES         |
 | GITLAB_USERNAME             | GitLab username                                                                        | GitLab       |
 | GITLAB_API_ENDPOINT         | GitLab API URL without the slash at the end; eg: `https://gitlab.example.com/api/v4`   | GitLab       |
+| (INTERNAL/EXTERNAL)_GITLAB_MAPPING_SOURCE_URL | GitLab URL for internal/external GitLab migrations; eg: `https://gitlab.example.com`| GitLab |
+| GITHUB_USER_MAPPING_SOURCE_URL | GitHub URL for GitHub Enterprise Server migrations; eg: `https://github.example.com` | GHES         |
 
 ### Secrets
 
@@ -107,13 +109,6 @@ If necessary, update the self-hosted runner label in [.github/workflows/migratio
 
 1. Update the `ghes-ssh-host` in [.github/workflows/migration-github-enterprise-server.yml#L13](/.github/workflows/migration-github-enterprise-server.yml#L13)
     - it should be in the format of: `github.company.com`
-2. Update the `user-mappings-source-url` in [.github/workflows/migration-github-enterprise-server.yml#L23](/.github/workflows/migration-github-enterprise-server.yml#L23)
-    - it should be in the format of: `https://github.example.com`
-
-**For GitLab**:
-
-1. Update the GitLab URL for internal GitLab migrations in [.github/workflows/migration-external-gitlab.yml#L21](/.github/workflows/migration-external-gitlab.yml#L21)
-2. Update the GitLab URL for external GitLab migrations in [.github/workflows/migration-internal-gitlab.yml#L24](/.github/workflows/migration-internal-gitlab.yml#L24)
 
 **For GEI**:
 
