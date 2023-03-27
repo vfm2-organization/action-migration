@@ -1,6 +1,6 @@
 # Parses migration issue and creates a comment with next step
 #
-# Required secrets:
+# Required variables:
 #
 #   - GHEC_TARGET_ORGANIZATION:
 #     The organization on GitHub.com to import into (needs to have ECI feature flag enabled)
@@ -28,7 +28,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const options = { targetOrganization: '${{ secrets.GHEC_TARGET_ORGANIZATION }}' }
+            const options = { targetOrganization: '${{ vars.GHEC_TARGET_ORGANIZATION }}' }
             await require('./.github/scripts/prepare.js')({github, context, options})
 
       - name: Post failure message

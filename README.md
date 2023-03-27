@@ -69,6 +69,14 @@ Create the following [issue labels](https://docs.github.com/en/issues/using-labe
 4. `migration` (for all)
 5. `gei` (for ghes)
 
+### Variables
+
+Create these [variables] on the repository that is hosting this migration utility:
+
+| Variable                      | Description                                                                            | Needed For   |
+|-----------------------------|----------------------------------------------------------------------------------------|------------- |
+| GHEC_TARGET_ORGANIZATION    | Name of target organization in GitHub.com (eg: `myorg`)                                | GHES, GitLab |
+
 ### Secrets
 
 Create these [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) on the repository that is hosting this migration utility:
@@ -76,7 +84,6 @@ Create these [secrets](https://docs.github.com/en/actions/security-guides/encryp
 | Secret                      | Description                                                                            | Needed For   |
 |-----------------------------|----------------------------------------------------------------------------------------|------------- |
 | GHEC_ADMIN_TOKEN            | PAT of account with permissions in target org in GitHub.com                            | GHES, GitLab |
-| GHEC_TARGET_ORGANIZATION    | Name of target organization in GitHub.com (eg: `myorg`)                                | GHES, GitLab |
 | GHES_ADMIN_USERNAME         | GitHub Enterprise server admin username                                                | GHES         |
 | GHES_ADMIN_TOKEN            | GitHub Enterprise Server admin console password/token                                  | GHES         |
 | GITLAB_USERNAME             | GitLab username                                                                        | GitLab       |

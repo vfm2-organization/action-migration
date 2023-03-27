@@ -12,10 +12,12 @@ on:
       user-mappings-source-url:
         required: true
         type: string
+      GHEC_TARGET_ORGANIZATION:
+        description: 'The GitHub Enterprise Cloud organization to migrate to'
+        required: true
+        type: string
     secrets:
       GHEC_ADMIN_TOKEN:
-        required: true
-      GHEC_TARGET_ORGANIZATION:
         required: true
 
 jobs:
@@ -84,7 +86,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GHEC_IMPORTER_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}
-          GHEC_IMPORTER_TARGET_ORGANIZATION: ${{ secrets.GHEC_TARGET_ORGANIZATION }}
+          GHEC_IMPORTER_TARGET_ORGANIZATION: ${{ vars.GHEC_TARGET_ORGANIZATION }}
           GHEC_IMPORTER_RESOLVE_REPOSITORY_RENAMES: guid-suffix
           GHEC_IMPORTER_DISALLOW_TEAM_MERGES: true
           GHEC_IMPORTER_USER_MAPPINGS_PATH: ../../subset-user-mappings.csv

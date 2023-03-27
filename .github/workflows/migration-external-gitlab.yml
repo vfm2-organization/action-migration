@@ -19,6 +19,6 @@ jobs:
     with:
       user-mappings-path: ../../user-mappings.csv
       user-mappings-source-url: https://gitlab.example.com
+      GHEC_TARGET_ORGANIZATION: ${{ vars.GHEC_TARGET_ORGANIZATION }}
     secrets:
       GHEC_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}
-      GHEC_TARGET_ORGANIZATION: ${{ secrets.GHEC_TARGET_ORGANIZATION }}
