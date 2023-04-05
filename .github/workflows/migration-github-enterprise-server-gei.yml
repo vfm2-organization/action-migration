@@ -11,9 +11,10 @@ jobs:
         contains(github.event.issue.labels.*.name, 'gei') &&
         !startsWith(github.event.comment.body, '/delete-repositories')
     uses: ./.github/workflows/shared-github-enterprise-cloud-gei.yml
+    with:
+      GHEC_TARGET_ORGANIZATION: ${{ vars.GHEC_TARGET_ORGANIZATION }}
     secrets:
       GHEC_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}
-      GHEC_TARGET_ORGANIZATION: ${{ secrets.GHEC_TARGET_ORGANIZATION }}
       GHES_ADMIN_TOKEN: ${{ secrets.GHES_ADMIN_TOKEN }}
       GEI_AZURE_CONNECTION_STRING: ${{ secrets.GEI_AZURE_CONNECTION_STRING }}
       

@@ -53,6 +53,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GHEC_IMPORTER_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}
-          GHEC_IMPORTER_TARGET_ORGANIZATION: ${{ secrets.GHEC_TARGET_ORGANIZATION }}
+          GHEC_IMPORTER_TARGET_ORGANIZATION: ${{ vars.GHEC_TARGET_ORGANIZATION }}
           NODE_OPTIONS: --unhandled-rejections=strict # Terminate process with non-zero exit code if file system (fs) operations fail (https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode)
 

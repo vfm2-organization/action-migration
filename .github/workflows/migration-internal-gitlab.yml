@@ -11,17 +11,17 @@ jobs:
     with:
       runner: internal
       setup-ruby: false
+      GITLAB_USERNAME: ${{ vars.INTERNAL_GITLAB_USERNAME}}
+      GITLAB_API_ENDPOINT: ${{ vars.INTERNAL_GITLAB_API_ENDPOINT }}
     secrets:
-      GITLAB_USERNAME: ${{ secrets.INTERNAL_GITLAB_USERNAME }}
       GITLAB_API_PRIVATE_TOKEN: ${{ secrets.INTERNAL_GITLAB_API_PRIVATE_TOKEN }}
-      GITLAB_API_ENDPOINT: ${{ secrets.INTERNAL_GITLAB_API_ENDPOINT }}
 
   import:
     needs: export
     uses: ./.github/workflows/shared-github-enterprise-cloud-import.yml
     with:
       user-mappings-path: ../../user-mappings.csv
-      user-mappings-source-url: https://gitlab.example.internal
+      user-mappings-source-url: ${{ vars.INTERNAL_GITLAB_MAPPING_SOURCE_URL}} # https://gitlab.example.internal 
+      GHEC_TARGET_ORGANIZATION: ${{ vars.GHEC_TARGET_ORGANIZATION }}
     secrets:
       GHEC_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}
-      GHEC_TARGET_ORGANIZATION: ${{ secrets.GHEC_TARGET_ORGANIZATION }}

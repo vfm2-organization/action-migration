@@ -12,12 +12,14 @@ on:
       setup-ruby:
         default: true
         type: boolean
-    secrets:
       GITLAB_USERNAME:
         required: true
-      GITLAB_API_PRIVATE_TOKEN:
-        required: true
+        type: string
       GITLAB_API_ENDPOINT:
+        required: true
+        type: string
+    secrets:
+      GITLAB_API_PRIVATE_TOKEN:
         required: true
 
 jobs:
@@ -31,9 +33,9 @@ jobs:
 
     env:
       MIGRATION_GUID: ${{ inputs.migration-guid }}
-      GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
+      GITLAB_USERNAME: ${{ inputs.GITLAB_USERNAME }}
       GITLAB_API_PRIVATE_TOKEN: ${{ secrets.GITLAB_API_PRIVATE_TOKEN }}
-      GITLAB_API_ENDPOINT: ${{ secrets.GITLAB_API_ENDPOINT }}
+      GITLAB_API_ENDPOINT: ${{ inputs.GITLAB_API_ENDPOINT }}
 
     steps:
 
