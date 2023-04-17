@@ -77,7 +77,7 @@ Create these [variables](https://docs.github.com/en/actions/learn-github-actions
 |-----------------------------|----------------------------------------------------------------------------------------|------------- |
 | GHEC_TARGET_ORGANIZATION    | Name of target organization in GitHub.com (eg: `myorg`)                                | GHES, GitLab |
 | GHES_ADMIN_USERNAME         | GitHub Enterprise server admin username                                                | GHES         |
-| GITHUB_USER_MAPPING_SOURCE_URL | GitHub URL for GitHub Enterprise Server migrations; eg: `https://github.example.com` | GHES         |
+| GH_USER_MAPPING_SOURCE_URL | GitHub URL for GitHub Enterprise Server migrations; eg: `https://github.example.com` | GHES         |
 | GHES_SSH_HOST               | GitHub Enterprise Server SSH host; eg: `github.example.com`                            | GHES         |
 | GITLAB_USERNAME             | GitLab username                                                                        | GitLab       |
 | GITLAB_API_ENDPOINT         | GitLab API URL without the slash at the end; eg: `https://gitlab.example.com/api/v4`   | GitLab       |
