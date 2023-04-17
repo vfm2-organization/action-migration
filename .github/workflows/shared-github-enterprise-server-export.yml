@@ -18,6 +18,8 @@ on:
     secrets:
       GHES_ADMIN_TOKEN:
         required: true
+      GHES_ADMIN_SSH_PRIVATE_KEY:
+        required: true
 
 jobs:
   export:
@@ -68,6 +70,12 @@ jobs:
             
             fs.writeFileSync('repositories.txt', parsedIssueBody.repositories.trim())
 
+      - name: Setup SSH host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 122 -H ${{ inputs.ghes-ssh-host }} >> ~/.ssh/known_hosts
+          echo "${{ secrets.GHES_ADMIN_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
       - name: Display GHES version
         run: $GHES_SSH -- ghe-version
         
