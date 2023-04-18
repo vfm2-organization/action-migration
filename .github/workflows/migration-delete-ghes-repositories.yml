@@ -1,0 +1,96 @@
+name: Migration (Delete repositories)
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  delete-repositories:
+    name: Delete repositories
+    runs-on: self-hosted
+
+    if: github.event_name == 'issue_comment' &&
+      startsWith(github.event.comment.body, '/delete-repositories')
+
+    steps:
+      - uses: actions/github-script@v6
+        id: "migration-guid"
+        with:
+          script: |
+            const regex = /\/delete-repositories ([^ ]+)/
+            const match = context.payload.comment.body.trim().match(regex)
+            if (match) {
+              console.log('migration-guid', match[1])
+              return match[1]
+            }
+
+      - name: Check out repository for ghec-importer
+        uses: actions/checkout@v3
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const https = require('https');
+            const fs = require('fs');
+
+            const migrationGuid = "Dry-run-" + ${{ steps.migration-guid.outputs.result }}
+            const [org, repo] = process.env.GITHUB_REPOSITORY.split('/');
+
+            const all_artifacts = await github.rest.actions.listArtifactsForRepo({
+              owner: org,
+              repo: repo,
+            });
+
+            const artifacts = all_artifacts.data.artifacts.filter(artifact => {
+              return artifact.name === migrationGuid;
+            });
+
+            const artifact = await github.rest.actions.downloadArtifact({
+              owner: org,
+              repo: repo,
+              artifact_id: artifacts[0].id,
+              archive_format: "zip",
+            });
+
+            const file = fs.createWriteStream(`${migrationGuid}.zip`);
+            const request = https.get(artifact.url, function(response) {
+              response.pipe(file);
+
+              file.on("finish", () => {
+                  file.close();
+                  console.log("Download Completed");
+              });
+            });
+
+      - run: |
+          MIGRATION_GUID=${{ steps.migration-guid.outputs.result }}
+          unzip Dry-run-${MIGRATION_GUID}.zip
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+      - run: |
+          npm i octokit
+
+      - name: Delete repositories
+        uses: actions/github-script@v6
+        env:
+          GHES_ADMIN_TOKEN: ${{ secrets.GHES_ADMIN_TOKEN }}
+        with:
+          script: |
+            const { deleteFromOrg } = require('./.github/scripts/delete-from-ghes.js')
+            deleteFromOrg()
+
+      - name: Update issue with running state
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const body = `:wastebasket: Deleted **Dry-run** migration. [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})\n\nTo run the production migration enter the following command:\n\`\`\`\n/run-production-migration\n\`\`\``
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            })

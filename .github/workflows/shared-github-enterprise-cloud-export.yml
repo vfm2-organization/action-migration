@@ -1,0 +1,130 @@
+on:
+  workflow_call:
+    inputs:
+      migration-guid:
+        default: migration-archive-${{ github.event.issue.number }}
+        type: string
+      runner:
+        default: self-hosted
+        type: string
+    secrets:
+      GHEC_ADMIN_TOKEN:
+        required: true
+
+jobs:
+  export:
+    name: Export
+    runs-on: ${{ inputs.runner }}
+
+    if: github.event_name == 'issue_comment' &&
+      (startsWith(github.event.comment.body, '/run-dry-run-migration') ||
+      startsWith(github.event.comment.body, '/run-production-migration'))
+
+    env:
+      MIGRATION_GUID: ${{ inputs.migration-guid }}
+      GHEC_ADMIN_TOKEN: ${{ secrets.GHEC_ADMIN_TOKEN }}
+
+    steps:
+      - name: Check out scripts
+        uses: actions/checkout@v2
+
+      - name: Set migration type
+        uses: actions/github-script@v5
+        id: migration-type
+        with:
+          result-encoding: string
+          script: |
+            return context.payload.comment.body.match('dry-run') ? 'Dry-run' : 'Production'
+
+      - name: Create workspace
+        run: mkdir -p ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}
+
+      - name: Parse repositories from issue body and write to file
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const fs = require('fs')
+            const parsedIssueBody = require('./.github/scripts/parse-issue-body.js')({context, core})
+            fs.writeFileSync('${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}/repositories.txt', parsedIssueBody.repositories.trim().replace(/https:\/\/github.com\//g,''))
+
+      - name: Update issue with running state
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const migrationType = "${{ steps.migration-type.outputs.result }}".toLowerCase();
+            const body = `:hourglass_flowing_sand: Starting **${migrationType}** migration. [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            })
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: |
+          npm i octokit
+
+      - name: Update issue with running state
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const migrationType = "${{ steps.migration-type.outputs.result }}".toLowerCase();
+            const body = `:hourglass_flowing_sand: Starting **${migrationType}** export. [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            })
+
+      - name: Run migration
+        uses: actions/github-script@v6
+        env:
+          MIGRATION_TYPE: ${{ steps.migration-type.outputs.result }}
+        with:
+          script: |
+            const { runMigration } = require('./.github/scripts/export-from-github.js');
+            const lock_repositories = ${{ steps.migration-type.outputs.result == 'Production' }};
+            runMigration(lock_repositories);
+
+      - if: ${{ failure() }}
+        name: Report failed migration
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const migrationType = "${{ steps.migration-type.outputs.result }}".toLowerCase();
+            const body = `:no_entry: **${migrationType} Export failed.** [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            })
+
+      - name: Archive Migration Artifact
+        uses: actions/upload-artifact@v2
+        if: ${{ success() }}
+        with:
+          name: ${{ env.MIGRATION_GUID }}
+          path: ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}/
+          retention-days: 1
+
+      - name: Update issue with success state
+        uses: actions/github-script@v5
+        if: ${{ success() }}
+        with:
+          script: |
+            const migrationType = "${{ steps.migration-type.outputs.result }}".toLowerCase();
+            const body = `:white_check_mark: Export **${migrationType}** completed successfully. [View workflow run for details](${context.payload.repository.html_url}/actions/runs/${context.runId})`
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            })
