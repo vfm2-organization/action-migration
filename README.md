@@ -93,14 +93,15 @@ Create these [secrets](https://docs.github.com/en/actions/security-guides/encryp
 | GHES_ADMIN_TOKEN            | GitHub Enterprise Server admin console password/token                                  | GHES         |
 | GITLAB_API_PRIVATE_TOKEN    | GitLab API Token                                                                       | GitLab       |
 | GEI_AZURE_CONNECTION_STRING | Connection string for an Azure storage account (required for GEI).                     | GHES         |
+| GHES_ADMIN_SSH_PRIVATE_KEY | The ssh key used to connect to the GHES instance.                     | GHES         |
 
-### Runner Setup
+### SSH Key setup
 
-Configure a runner on the repository that can access the GitHub Enterprise Server or GitLab instance.
-
-For GHES: Add the machine's SSH public key SSH to the [GitHub Enterprise Server admin console](https://docs.github.com/en/enterprise-server@3.4/admin/configuration/configuring-your-enterprise/accessing-the-administrative-shell-ssh#enabling-access-to-the-administrative-shell-via-ssh). The script needs to be able to SSH into the GitHub Enterprise Server instance. Instructions on creating and/or exporting the public key are below:
+For GHES: The script needs to be able to SSH into the GitHub Enterprise Server instance. Add an SSH public key to the [GitHub Enterprise Server admin console](https://docs.github.com/en/enterprise-server@3.4/admin/configuration/configuring-your-enterprise/accessing-the-administrative-shell-ssh#enabling-access-to-the-administrative-shell-via-ssh). Create a repo secret named `GHES_ADMIN_SSH_PRIVATE_KEY` and use the contents of the SSH private key as the value. Instructions on creating and/or exporting the public key are below:
 - [Creating public key](https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key)
 - Export public key to console: `cat ~/.ssh/id_rsa.pub`
+
+### Runner Setup
 
 If necessary, update the self-hosted runner label in [.github/workflows/migration-github-enterprise-server.yml#L12](/.github/workflows/migration-github-enterprise-server.yml#L12) so that it picks up the designated runner - the runner label otherwise defaults to `self-hosted`.
 

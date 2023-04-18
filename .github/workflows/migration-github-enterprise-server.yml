@@ -14,6 +14,7 @@ jobs:
       GHES_ADMIN_USERNAME: ${{vars.GHES_ADMIN_USERNAME}}}
     secrets:
       GHES_ADMIN_TOKEN: ${{ secrets.GHES_ADMIN_TOKEN }}
+      GHES_ADMIN_SSH_PRIVATE_KEY: ${{ secrets.GHES_ADMIN_SSH_PRIVATE_KEY }}
 
   import:
     needs: export
