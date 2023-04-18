@@ -110,7 +110,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ success() }}
         with:
-          name: ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}
+          name: ${{ env.MIGRATION_GUID }}
           path: ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}/
           retention-days: 1
 

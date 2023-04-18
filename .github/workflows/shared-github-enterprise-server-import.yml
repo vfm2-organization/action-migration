@@ -30,6 +30,7 @@ jobs:
       MIGRATION_GUID: ${{ inputs.migration-guid }}
       GHES_SSH: ssh -i ssh.key -p 122 admin@${{ secrets.GHES_HOSTNAME }}
       GHES_SCP: scp -i ssh.key -P 122
+      GHES_HOSTNAME: ${{ secrets.GHES_HOSTNAME }}
 
     steps:
       - name: Check out scripts
@@ -60,18 +61,18 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}
+          name: ${{ env.MIGRATION_GUID }}.tar.gz
           path: ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}/
 
       - name: Upload migration archive to GHES
         run: |
           $GHES_SCP \
-          ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}/${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}.tar.gz admin@$GHES_HOSTNAME:/home/admin
+          ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}/${{ env.MIGRATION_GUID }}.tar.gz admin@$GHES_HOSTNAME:/home/admin
 
       - name: Prepare migration
         run: |
           $GHES_SSH -- ghe-migrator prepare \
-          /home/admin/${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}.tar.gz \
+          /home/admin/${{ env.MIGRATION_GUID }}.tar.gz \
           --guid ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}
 
       - name: Update issue with status
@@ -118,7 +119,7 @@ jobs:
       - name: Start Migration
         run: |
           $GHES_SSH -- ghe-migrator import \
-          /home/admin/${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}.tar.gz \
+          /home/admin/${{ env.MIGRATION_GUID }}.tar.gz \
           --guid ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }} \
           --username=${{ secrets.GHES_ADMIN_USERNAME }} \
           --pat=${{ secrets.GHES_ADMIN_TOKEN }}
@@ -138,15 +139,15 @@ jobs:
               body
             })
 
-      - name: Migration Cleanup
-        run: |
-          $GHES_SSH -- rm ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}.tar.gz
-          $GHES_SSH -- rm ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}-conflicts.csv
-
       - name: Migration Unlock
         run: |
           $GHES_SSH -- ghe-migrator unlock \
           --guid ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}
+
+      - name: Migration Cleanup
+        run: |
+          $GHES_SSH -- rm ${{ env.MIGRATION_GUID }}.tar.gz
+          $GHES_SSH -- rm ${{ steps.migration-type.outputs.result }}-${{ inputs.migration-guid }}-conflicts.csv
 
       - name: Update issue with status
         uses: actions/github-script@v6
