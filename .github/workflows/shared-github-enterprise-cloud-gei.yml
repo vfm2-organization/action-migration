@@ -120,6 +120,12 @@ jobs:
           $RepoMigrations = [ordered]@{}
           $RepoSources = ConvertFrom-Json '${{ steps.parse-issue-body.outputs.repositories-json }}'
 
+          # For GHEC > GHEC migrations, we don't need to specify the Azure connection string, or the GHES API URL
+          # if vars.GHEC_SOURCE = true then don't set $ServerInclude
+          if ('${{ vars.GHEC_SOURCE }}' -ne 'true') {
+            $ServerInclude = '--azure-storage-connection-string "${{ secrets.GEI_AZURE_CONNECTION_STRING }}" --ghes-api-url "https://$($Repo.host)/api/v3"  `'
+          }
+
           foreach ($Repo in $RepoSources) {
             Write-Host "::group::$($Repo.org)/$($Repo.name)"
 
@@ -128,9 +134,8 @@ jobs:
               --source-repo $Repo.name                                                        `
               --target-repo $Repo.name                                                        `
               --github-source-org $Repo.org                                                   `
-              --github-target-org '${{ inputs.GHEC_TARGET_ORGANIZATION }}'                   `
-              --azure-storage-connection-string '${{ secrets.GEI_AZURE_CONNECTION_STRING }}'  `
-              --ghes-api-url "https://$($Repo.host)/api/v3"                                   `
+              --github-target-org '${{ inputs.GHEC_TARGET_ORGANIZATION }}'                    `
+              $ServerInclude
               ${{ steps.lock-flag.outputs.result }}
             }
             
