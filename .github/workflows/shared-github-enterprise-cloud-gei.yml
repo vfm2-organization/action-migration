@@ -18,7 +18,7 @@ on:
 jobs:
   migrate:
     name: GEI Migrate
-    runs-on: self-hosted
+    runs-on: Action-Runner
 
     # Maximize the timeout to 50,400 minutes (35 days) from the default
     # limit of 360 minutes (6 hours), as migrations can take some tme.
